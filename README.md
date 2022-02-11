@@ -1,3 +1,10 @@
+# NOTE
+This repo will hopefully streamline deployment of Open Context. The repo started by forking:
+https://github.com/evgeniy-khist/letsencrypt-docker-compose
+
+
+
+
 # Nginx and Let’s Encrypt with Docker Compose in less than 3 minutes
 
 This example automatically obtains and renews [Let's Encrypt](https://letsencrypt.org/) TLS certificates and set up HTTPS in Nginx for multiple domain names using Docker Compose.
