@@ -1,0 +1,6 @@
+*.ini
+*.log
+secrets.json
+*/secrets.json
+/static
+/logs
