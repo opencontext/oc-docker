@@ -17,6 +17,20 @@ services:
       - "80:80"
       - "443:443"
     restart: always
+  
+  oc:
+    container_name: oc
+    image: opencontext/oc
+    build:
+      context: .
+      dockerfile: oc/Dockerfile
+    environment:
+      - SSH_PRIVATE_KEY=${SSH_PRIVATE_KEY}
+    stdin_open: true # docker run -i
+    network_mode: "host"
+    tty: true        # docker run -t
+    volumes:
+      -  $PWD:/deploy_files
 
   certbot:
     build: ./certbot
