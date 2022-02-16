@@ -80,7 +80,7 @@ When you are ready to use production Let's Encrypt server, set `CERTBOT_TEST_CER
 3. You have a server with a publicly routable IP address
 4. You have cloned this repository
    ```bash
-   git clone https://github.com/evgeniy-khist/letsencrypt-docker-compose.git
+   git clone https://github.com/opencontext/oc-docker.git
    ```
 
 ## Step 0 - Point your domain to server with DNS A records
@@ -92,15 +92,15 @@ For all domain names configure DNS A records to point to a server where Docker c
 Specify you domain names and contact emails for these domains in the `config.env`:
 
 ```properties
-DOMAINS=test1.devcomanda.com test2.devcomanda.com
-CERTBOT_EMAILS=info@devcomanda.com info@devcomanda.com
+DOMAINS=staging.opencontext.org
+CERTBOT_EMAILS=eric@opencontext.org
 ```
 
 ## Step 2 - Create named Docker volumes for dummy and Let's Encrypt TLS certificates
 
 ```bash
-docker volume create --name=devcomanda_nginx_ssl
-docker volume create --name=devcomanda_certbot_certs
+docker volume create --name=opencontext_nginx_ssl
+docker volume create --name=opencontext_certbot_certs
 ```
 
 ## Step 3 - Build images and start containers
@@ -126,8 +126,8 @@ CERTBOT_TEST_CERT=0
 Re-create the volume for Let's Encrypt certificates:
 
 ```bash
-docker volume rm devcomanda_certbot_certs
-docker volume create --name=devcomanda_certbot_certs
+docker volume rm opencontext_certbot_certs
+docker volume create --name=opencontext_certbot_certs
 ```
 
 Start the containers:
