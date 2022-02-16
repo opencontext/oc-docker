@@ -59,4 +59,4 @@ volumes:
     external: true
   opencontext_certbot_certs:
     external: true
-  staging_opencontext_org_certbot:
+  staging_certbot:
