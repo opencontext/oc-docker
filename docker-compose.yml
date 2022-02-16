@@ -11,11 +11,12 @@ services:
       - opencontext_certbot_certs:/etc/letsencrypt
       - staging_certbot:/var/www/certbot/staging.opencontext.org
       - ./html:/var/www/html/staging.opencontext.org
+      -  $PWD:/deploy_files
     ports:
       - "80:80"
       - "443:443"
     restart: always
-  
+
   oc:
     container_name: oc
     image: opencontext/oc
