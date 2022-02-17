@@ -90,10 +90,10 @@ RUN bash start_oc.sh
 
 # Expose ports.
 # Postgres
-EXPOSE 5444
+EXPOSE 5432
 # Refine
 EXPOSE 3343
 # Solr
-EXPOSE 8993
+EXPOSE 8983
 # Open Context Django
-EXPOSE 8010
+EXPOSE 8000
