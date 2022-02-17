@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 
 services:
   nginx:
@@ -7,11 +7,11 @@ services:
     env_file:
       - ./config.env
     volumes:
+      - logs_nginx:/logs/nginx
       - opencontext_nginx_ssl:/etc/nginx/ssl
       - opencontext_certbot_certs:/etc/letsencrypt
       - staging_certbot:/var/www/certbot/staging.opencontext.org
       - ./html:/var/www/html/staging.opencontext.org
-      -  $PWD:/deploy_files
     ports:
       - "80:80"
       - "443:443"
@@ -55,8 +55,11 @@ services:
       - certbot
 
 volumes:
+  logs_nginx:
+    external: true
   opencontext_nginx_ssl:
     external: true
   opencontext_certbot_certs:
     external: true
   staging_certbot:
+    external: true

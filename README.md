@@ -99,8 +99,10 @@ CERTBOT_EMAILS=eric@opencontext.org
 ## Step 2 - Create named Docker volumes for dummy and Let's Encrypt TLS certificates
 
 ```bash
+docker volume create --name=logs_nginx
 docker volume create --name=opencontext_nginx_ssl
 docker volume create --name=opencontext_certbot_certs
+docker volume create --name=staging_certbot
 ```
 
 ## Step 3 - Build images and start containers
