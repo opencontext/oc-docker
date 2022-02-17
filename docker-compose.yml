@@ -30,10 +30,6 @@ services:
     tty: true        # docker run -t
     volumes:
       -  $PWD:/deploy_files
-    ports:
-      - "5432:5432"
-      - "8983:8983"
-      - "8000:8000"
 
   certbot:
     build: ./certbot
