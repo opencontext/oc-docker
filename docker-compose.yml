@@ -12,10 +12,13 @@ services:
     environment:
       - SSH_PRIVATE_KEY=${SSH_PRIVATE_KEY}
     stdin_open: true # docker run -i
-    network_mode: "host"
     tty: true        # docker run -t
     volumes:
       -  $PWD:/deploy_files
+    ports:
+      - "8000:8000"
+      - "5432:5432"
+      - "8983:8983"
     command:
       "gunicorn -w 2 -b 0.0.0.0:8000 --chdir /open-context-py opencontext_py.wsgi:application --reload --timeout 3600"
 
