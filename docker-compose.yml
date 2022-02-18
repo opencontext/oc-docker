@@ -10,7 +10,7 @@ services:
       - "6379:6379"
     volumes:
       - "redisdata:/data"
-    command: ["redis-server", "--bind", "redis", "--port", "6379"]
+    command: "redis-server"
 
   oc:
     container_name: oc
