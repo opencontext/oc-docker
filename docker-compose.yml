@@ -6,8 +6,8 @@ services:
     container_name: redis
     image: "redis:6-alpine"
     restart: always
-    expose:
-      - 6379
+    ports:
+      - "6379"
     volumes:
       - "redisdata:/data"
     command: "redis-server"
@@ -29,6 +29,8 @@ services:
       - "8983:8983"
     expose:
       - 8000
+    links:
+      - redis:redis
     volumes:
       -  $PWD:/deploy_files
       - ./logs/open-context-py:/open-context-py/logs
