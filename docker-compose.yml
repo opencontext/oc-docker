@@ -10,7 +10,7 @@ services:
       - "6379:6379"
     volumes:
       - "redisdata:/data"
-    command: "redis-server"
+    command: ["redis-server", "--bind", "redis", "--port", "6379"]
 
   oc:
     container_name: oc
@@ -21,13 +21,12 @@ services:
       dockerfile: oc/Dockerfile
     environment:
       - SSH_PRIVATE_KEY=${SSH_PRIVATE_KEY}
+      - REDIS_HOST=redis
     stdin_open: true # docker run -i
     tty: true        # docker run -t
     ports:
       - "5432:5432"
       - "8983:8983"
-    links:
-      - redis:redis
     expose:
     - 8000
     volumes:
