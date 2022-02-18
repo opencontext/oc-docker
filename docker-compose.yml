@@ -3,14 +3,14 @@ version: "3"
 services:
 
   redis:
-    container_name: "redis"
+    container_name: redis
     image: "redis:6-alpine"
     restart: always
     ports:
       - "6379:6379"
     volumes:
       - "redisdata:/data"
-    command: "redis-server"
+    command: ["redis-server", "--bind", "0.0.0.0", "--port", "6379"]
 
   oc:
     container_name: oc
