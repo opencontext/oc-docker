@@ -10,6 +10,7 @@ services:
     - 6379
     volumes:
       - "redisdata:/data"
+    command: "redis-server"
 
   oc:
     container_name: oc
