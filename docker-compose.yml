@@ -20,6 +20,7 @@ services:
   oc:
     container_name: oc
     image: opencontext/oc
+    restart: always
     build:
       context: .
       dockerfile: oc/Dockerfile
@@ -30,6 +31,9 @@ services:
     tty: true        # docker run -t
     volumes:
       -  $PWD:/deploy_files
+    command:
+      "gunicorn --workers=2 --bind=0.0.0.0:8000 oc.wsgi:application"
+    
 
   certbot:
     build: ./certbot
