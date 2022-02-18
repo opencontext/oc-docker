@@ -9,8 +9,6 @@ COPY nginx.sh /customization/
 
 RUN chmod +x /customization/nginx.sh
 
-# Open Context Django
-EXPOSE 8000
 EXPOSE 80
 
 CMD ["/customization/nginx.sh"]

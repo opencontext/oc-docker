@@ -14,13 +14,12 @@ services:
     stdin_open: true # docker run -i
     tty: true        # docker run -t
     ports:
-      - "8000:8000"
       - "5432:5432"
       - "8983:8983"
+    expose:
+    - 8000
     volumes:
       -  $PWD:/deploy_files
-    networks:  # <-- here
-      - nginx_network
     command:
       "gunicorn -w 2 -b 0.0.0.0:8000 --chdir /open-context-py opencontext_py.wsgi:application --reload --timeout 3600"
 
@@ -41,8 +40,6 @@ services:
     restart: always
     depends_on:
       - oc
-    networks:  # <-- here
-      - nginx_network
     
   certbot:
     build: ./certbot
@@ -76,7 +73,3 @@ volumes:
     external: true
   staging_certbot:
     external: true
-
-networks:  # <-- and here
-  nginx_network:
-    driver: bridge

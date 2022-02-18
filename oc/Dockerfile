@@ -95,5 +95,3 @@ EXPOSE 5432
 EXPOSE 3343
 # Solr
 EXPOSE 8983
-# Open Context Django
-EXPOSE 8000
