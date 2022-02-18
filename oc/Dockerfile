@@ -51,9 +51,6 @@ RUN apt-get install -y postgresql-client
 RUN apt-get update
 RUN apt-get install -y redis-server
 
-# Install NGINX
-RUN apt-get update
-RUN apt-get install -y nginx
 
 FROM python:3.9
 # set environment variables
