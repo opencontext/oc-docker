@@ -37,7 +37,6 @@ services:
       - ./static:/open-context-py/static
     command: bash -c "
         git -C /open-context-py reset --hard origin/new-schema-1
-        && python /open-context-py/manage.py rqworker high
         && gunicorn -w 2 -b 0.0.0.0:8000 --chdir /open-context-py opencontext_py.wsgi:application --reload --timeout 3600"
     depends_on:
       - redis

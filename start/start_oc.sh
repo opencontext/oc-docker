@@ -4,7 +4,7 @@ echo "Start Redis-server";
 # redis-server &
 
 echo "Start the Open Context redis worker";
-# python /open-context-py/manage.py rqworker high &
+python /open-context-py/manage.py rqworker high &
 
 echo "Start the Open Context server";
 # python /open-context-py/manage.py runserver 0.0.0.0:8000 &
