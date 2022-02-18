@@ -7,7 +7,7 @@ services:
     env_file:
       - ./config.env
     volumes:
-      - logs_nginx:/logs/nginx
+      - ./logs/nginx:/logs/nginx
       - opencontext_nginx_ssl:/etc/nginx/ssl
       - opencontext_certbot_certs:/etc/letsencrypt
       - staging_certbot:/var/www/certbot/staging.opencontext.org
@@ -32,7 +32,7 @@ services:
     volumes:
       -  $PWD:/deploy_files
     command:
-      "gunicorn --workers=2 --bind=0.0.0.0:8000 opencontext_py.wsgi:application"
+      "gunicorn -w 2 -b 0.0.0.0:8000 --chdir /open-context-py opencontext_py.wsgi:application --reload --timeout 3600"
     
 
   certbot:
