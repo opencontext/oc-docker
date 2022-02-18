@@ -1,21 +1,6 @@
 version: "3"
 
 services:
-  nginx:
-    build: ./nginx
-    image: opencontext/nginx
-    env_file:
-      - ./config.env
-    volumes:
-      - ./logs/nginx:/logs/nginx
-      - opencontext_nginx_ssl:/etc/nginx/ssl
-      - opencontext_certbot_certs:/etc/letsencrypt
-      - staging_certbot:/var/www/certbot/staging.opencontext.org
-      - ./html:/var/www/html/staging.opencontext.org
-    ports:
-      - "80:80"
-      - "443:443"
-    restart: always
 
   oc:
     container_name: oc
@@ -33,8 +18,25 @@ services:
       -  $PWD:/deploy_files
     command:
       "gunicorn -w 2 -b 0.0.0.0:8000 --chdir /open-context-py opencontext_py.wsgi:application --reload --timeout 3600"
-    
 
+  nginx:
+    build: ./nginx
+    image: opencontext/nginx
+    env_file:
+      - ./config.env
+    volumes:
+      - ./logs/nginx:/logs/nginx
+      - opencontext_nginx_ssl:/etc/nginx/ssl
+      - opencontext_certbot_certs:/etc/letsencrypt
+      - staging_certbot:/var/www/certbot/staging.opencontext.org
+      - ./html:/var/www/html/staging.opencontext.org
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+    depends_on:
+      - oc
+    
   certbot:
     build: ./certbot
     image: opencontext/certbot
