@@ -37,10 +37,10 @@ RUN apt-get install -y git
 # Now install components required to run Open Context
 # We will probably need to use these eventually, so make sure this works
 # then possibly comment out.
-RUN apt-get update
-RUN apt-get install -y nodejs
-RUN apt-get install -y npm
-RUN npm install --global yarn
+# RUN apt-get update
+# RUN apt-get install -y nodejs
+# RUN apt-get install -y npm
+# RUN npm install --global yarn
 
 
 # Install the postgres client
@@ -48,8 +48,9 @@ RUN apt-get update
 RUN apt-get install -y postgresql-client
 
 # Install the redis cache
-RUN apt-get update
-RUN apt-get install -y redis-server
+# RUN apt-get update
+# RUN apt-get install -y redis-server
+# RUN redis-server &
 
 
 FROM python:3.9
@@ -89,6 +90,8 @@ RUN bash start_oc.sh
 # Postgres
 EXPOSE 5432
 # Refine
-EXPOSE 3343
+EXPOSE 3333
 # Solr
 EXPOSE 8983
+# Redis
+EXPOSE 6379
