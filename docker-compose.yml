@@ -32,7 +32,7 @@ services:
     volumes:
       -  $PWD:/deploy_files
     command:
-      "gunicorn --workers=2 --bind=0.0.0.0:8000 oc.wsgi:application"
+      "gunicorn --workers=2 --bind=0.0.0.0:8000 opencontext_py.wsgi:application"
     
 
   certbot:
