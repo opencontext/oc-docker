@@ -20,8 +20,13 @@ services:
     - 8000
     volumes:
       -  $PWD:/deploy_files
-    command:
-      "gunicorn -w 2 -b 0.0.0.0:8000 --chdir /open-context-py opencontext_py.wsgi:application --reload --timeout 3600"
+      - ./logs/open-context-py:/open-context-py/logs
+      - ./static:/open-context-py/static
+    command: bash -c "
+        redis-server &
+        && python /open-context-py/manage.py rqworker high
+        && gunicorn -w 2 -b 0.0.0.0:8000 --chdir /open-context-py opencontext_py.wsgi:application --reload --timeout 3600
+      "
 
   nginx:
     build: ./nginx
