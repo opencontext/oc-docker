@@ -30,6 +30,7 @@ services:
       - ./config.env
     volumes:
       - ./logs/nginx:/logs/nginx
+      - ./static:/open-context-py/static
       - opencontext_nginx_ssl:/etc/nginx/ssl
       - opencontext_certbot_certs:/etc/letsencrypt
       - staging_certbot:/var/www/certbot/staging.opencontext.org
