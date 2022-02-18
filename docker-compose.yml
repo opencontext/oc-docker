@@ -36,10 +36,8 @@ services:
       - ./logs/open-context-py:/open-context-py/logs
       - ./static:/open-context-py/static
     command: bash -c "
-        gunicorn -w 2 -b 0.0.0.0:8000 --chdir /open-context-py opencontext_py.wsgi:application --reload --timeout 3600"
-    # command: bash -c "
-    #    python /open-context-py/manage.py rqworker high
-    #    && gunicorn -w 2 -b 0.0.0.0:8000 --chdir /open-context-py opencontext_py.wsgi:application --reload --timeout 3600"
+        python /open-context-py/manage.py rqworker high
+        && gunicorn -w 2 -b 0.0.0.0:8000 --chdir /open-context-py opencontext_py.wsgi:application --reload --timeout 3600"
     depends_on:
       - redis
 
