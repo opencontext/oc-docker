@@ -77,7 +77,8 @@ RUN pip install -r open-context-py/requirements.txt
 
 COPY secrets/secrets.json open-context-py/secrets.json
 
-COPY static/ open-context-py/static
+# COPY static/ open-context-py/static
+RUN mkdir open-context-py/file_cache
 
 RUN mkdir open-context-py/logs
 RUN echo "Start of error logs...\n" > open-context-py/logs/error.log
