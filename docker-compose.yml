@@ -43,6 +43,7 @@ services:
       - redis
 
   nginx:
+    container_name: nginx
     build: ./nginx
     image: opencontext/nginx
     env_file:
