@@ -22,6 +22,7 @@ services:
     environment:
       - SSH_PRIVATE_KEY=${SSH_PRIVATE_KEY}
       - REDIS_HOST=redis
+      - DEBUG="0"
     stdin_open: true # docker run -i
     tty: true        # docker run -t
     ports:
