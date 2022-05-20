@@ -103,6 +103,7 @@ docker volume create --name=logs_nginx
 docker volume create --name=opencontext_nginx_ssl
 docker volume create --name=opencontext_certbot_certs
 docker volume create --name=staging_certbot
+docker volume create --name=redisdata
 ```
 
 ## Step 3 - Build images and start containers
@@ -136,4 +137,26 @@ Start the containers:
 
 ```bash
 docker-compose up
+```
+
+
+## NOTE
+You may run into weirdness permissions issues restarting the docker container. I solved it with:
+```
+sudo chmod 666 /var/run/docker.sock
+
+```
+
+
+
+## Useful Workflow Tips
+One common need while the oc-docker compose is up and running would be to update the software in the Open Context container. To do so quickly, simply:
+
+```
+# This updates to the latest head of the new-schema-1 branch:
+
+docker exec -it oc git -C /open-context-py reset --hard origin/new-schema-1
+
+# Now restart the container:
+docker-compose restart oc
 ```
