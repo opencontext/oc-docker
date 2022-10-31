@@ -15,6 +15,7 @@ RUN apt-get install -y --no-install-recommends gcc
 RUN apt-get install -y --no-install-recommends build-essential
 RUN apt-get install -y --no-install-recommends mime-support
 RUN apt-get install -y --no-install-recommends libgdal-dev
+RUN apt-get install -y --no-install-recommends nano
 RUN apt-get install -y git
 
 
