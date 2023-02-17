@@ -15,7 +15,8 @@ RUN apt-get install -y --no-install-recommends gcc
 RUN apt-get install -y --no-install-recommends build-essential
 RUN apt-get install -y --no-install-recommends mime-support
 RUN apt-get install -y --no-install-recommends libgdal-dev
-RUN apt-get install -y git
+RUN apt-get install -y --no-install-recommends nano
+RUN apt-get update --fix-missing && apt-get install -y git
 
 
 # For some reason, I can't clone a repo from Github this way, leave it for now.
