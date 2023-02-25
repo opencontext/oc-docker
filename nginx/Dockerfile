@@ -1,14 +1,16 @@
-FROM nginx:1.17-alpine
+FROM nginx:1.18-alpine-perl
 
+RUN apk add --no-cache nginx-mod-http-perl
 RUN apk add --no-cache openssl
 
-COPY default.conf /etc/nginx/conf.d/
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY default.conf /etc/nginx/conf.d/default.conf
 COPY options-ssl-nginx.conf /etc/nginx/
 COPY hsts.conf /etc/nginx/
-COPY nginx.sh /customization/
-
+RUN mkdir -p /customization
+RUN mkdir -p /etc/symb_link_ssl
+COPY nginx.sh /customization/nginx.sh
 RUN chmod +x /customization/nginx.sh
 
 EXPOSE 80
-
 CMD ["/customization/nginx.sh"]

@@ -1,4 +1,4 @@
-version: "3"
+version: "3.9"
 
 services:
 
@@ -50,13 +50,17 @@ services:
     image: opencontext/nginx
     env_file:
       - ./config.env
+    environment:
+      - DOMAINS="${DOMAINS}"
+      - DEPLOY_HOST="${DEPLOY_HOST}"
+      - CERT_PATH="${CERT_PATH}"
     volumes:
       - ./logs/nginx:/logs/nginx
       - ./static:/open-context-py/static
-      - opencontext_nginx_ssl:/etc/nginx/ssl
-      - opencontext_certbot_certs:/etc/letsencrypt
-      - staging_certbot:/var/www/certbot/staging.opencontext.org
-      - ./html:/var/www/html/staging.opencontext.org
+      - nginx_ssl:/etc/nginx/ssl
+      - certbot_certs:/etc/letsencrypt
+      - oc_certbot:$CERT_PATH
+      - ./html:$NGINX_HTML_PATH
     ports:
       - "8000:8000"
       - "80:80"
@@ -71,12 +75,13 @@ services:
     env_file:
       - ./config.env
     volumes:
-      - opencontext_certbot_certs:/etc/letsencrypt
-      - staging_certbot:/var/www/certbot/staging.opencontext.org
+      - certbot_certs:/etc/letsencrypt
+      - oc_certbot:$CERT_PATH
     depends_on:
       - nginx
 
   cron:
+    container_name: cron
     build: ./cron
     image: opencontext/cron
     environment:
@@ -84,6 +89,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./:/workdir:ro
+    restart: unless-stopped
     depends_on:
       - nginx
       - certbot
@@ -91,11 +97,11 @@ services:
 volumes:
   logs_nginx:
     external: true
-  opencontext_nginx_ssl:
+  nginx_ssl:
     external: true
-  opencontext_certbot_certs:
+  certbot_certs:
     external: true
-  staging_certbot:
+  oc_certbot:
     external: true
   redisdata:
     external: true

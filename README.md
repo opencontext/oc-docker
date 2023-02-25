@@ -24,7 +24,7 @@ For simplicity this example deals with the following domain names:
 * test1.devcomanda.com
 * test2.devcomanda.com
 
-The idea is simple. There are 3 containers: 
+The idea is simple. There are 3 containers:
 
 * Nginx
 * Certbot - for obtaining and renewing certificates
@@ -100,9 +100,9 @@ CERTBOT_EMAILS=eric@opencontext.org
 
 ```bash
 docker volume create --name=logs_nginx
-docker volume create --name=opencontext_nginx_ssl
-docker volume create --name=opencontext_certbot_certs
-docker volume create --name=staging_certbot
+docker volume create --name=nginx_ssl
+docker volume create --name=certbot_certs
+docker volume create --name=oc_certbot
 docker volume create --name=redisdata
 ```
 

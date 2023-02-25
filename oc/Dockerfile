@@ -80,7 +80,7 @@ RUN pip install --upgrade pip
 RUN git clone https://github.com/ekansa/open-context-py.git
 
 WORKDIR ${OC_FOLDER}
-RUN cd open-context-py; git checkout origin/${GIT_BRANCH};
+RUN cd ${OC_FOLDER}; git checkout ${GIT_BRANCH};
 RUN git reset --hard origin/${GIT_BRANCH};
 RUN pip install -r ${OC_FOLDER}/requirements.txt
 
