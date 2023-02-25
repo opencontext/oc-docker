@@ -19,10 +19,13 @@ services:
     build:
       context: .
       dockerfile: oc/Dockerfile
+      args:
+        GIT_BRANCH: "new-schema-1"
     environment:
       - SSH_PRIVATE_KEY=${SSH_PRIVATE_KEY}
       - REDIS_HOST=redis
       - DEBUG="0"
+      - GIT_BRANCH="new-schema-1"
     stdin_open: true # docker run -i
     tty: true        # docker run -t
     ports:
@@ -36,9 +39,8 @@ services:
       -  $PWD:/deploy_files
       - ./logs/open-context-py:/open-context-py/logs
       - ./static:/open-context-py/static
-    command: bash -c "
-        git -C /open-context-py reset --hard origin/new-schema-1
-        && gunicorn -w 2 -b 0.0.0.0:8000 --chdir /open-context-py opencontext_py.wsgi:application --reload --timeout 3600"
+    command:
+      - run_oc
     depends_on:
       - redis
 
@@ -62,7 +64,7 @@ services:
     restart: always
     depends_on:
       - oc
-    
+
   certbot:
     build: ./certbot
     image: opencontext/certbot

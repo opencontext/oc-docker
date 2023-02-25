@@ -3,6 +3,10 @@
 #
 # DOCKER_BUILDKIT=1 docker build --ssh github=~/.ssh/oc_docker_id_rsa -t buildtest .
 
+ARG GIT_BRANCH
+ENV GIT_BRANCH=${GIT_BRANCH}
+ENV OC_FOLDER=/open-context-py
+
 # Start with Ubuntu 20
 FROM ubuntu:20.04
 USER root
@@ -54,7 +58,7 @@ RUN apt-get install -y postgresql-client
 # RUN redis-server &
 
 
-FROM python:3.9
+FROM python:3.10
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
@@ -65,7 +69,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 # Now install pip
 # RUN apt-get install -y python3-pip
-# RUN groupadd -r oc 
+# RUN groupadd -r oc
 # RUN useradd -m -r -g oc -G sudo oc
 # USER oc
 # ENV PATH="/opt/venv/bin:$PATH"
@@ -74,20 +78,29 @@ RUN pip install --upgrade pip
  # WORKDIR /home/oc
 # Clone the Open Context git repo, checkout the desired branch
 RUN git clone https://github.com/ekansa/open-context-py.git
-RUN cd open-context-py; git checkout origin/new-schema-1;
-RUN pip install -r open-context-py/requirements.txt
 
-COPY secrets/secrets.json open-context-py/secrets.json
+WORKDIR ${OC_FOLDER}
+RUN cd open-context-py; git checkout origin/${GIT_BRANCH};
+RUN git reset --hard origin/${GIT_BRANCH};
+RUN pip install -r ${OC_FOLDER}/requirements.txt
+
+COPY /secrets/secrets.json ${OC_FOLDER}/secrets.json
 
 # COPY static/ open-context-py/static
-RUN mkdir -p open-context-py/file_cache
-RUN mkdir -p open-context-py/logs
-RUN echo "Start of error logs...\n" > open-context-py/logs/error.log
+RUN mkdir -p ${OC_FOLDER}/file_cache
+RUN mkdir -p ${OC_FOLDER}/logs
+RUN echo "Start of error logs...\n" > ${OC_FOLDER}/logs/error.log
 
-COPY start/start_oc.sh start_oc.sh
-RUN bash start_oc.sh
+COPY /oc/entrypoint.sh ${APP_ROOT}/entrypoint.sh
+RUN chmod -R 700 ${APP_ROOT}/entrypoint.sh
+
+ENTRYPOINT ["./entrypoint.sh"]
+CMD ["run_oc"]
+WORKDIR ${OC_FOLDER}
 
 # Expose ports.
+# Open Context Django
+EXPOSE 8000
 # Postgres
 EXPOSE 5432
 # Refine
