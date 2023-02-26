@@ -9,7 +9,7 @@ RUN chmod -R 700 /workdir/entrypoint.sh
 
 WORKDIR /workdir
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/workdir/entrypoint.sh"]
 CMD ["run_oc_worker"]
 
 WORKDIR /workdir
