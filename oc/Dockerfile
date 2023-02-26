@@ -2,16 +2,13 @@ FROM ubuntu:20.04
 # Start with Ubuntu 20
 
 # Build a working Open Context deployment from a dockerfile
-# Example invocation:
-#
-# DOCKER_BUILDKIT=1 docker build --ssh github=~/.ssh/oc_docker_id_rsa -t buildtest .
+USER root
+
 ARG GIT_BRANCH
 ENV GIT_BRANCH=${GIT_BRANCH}
 ENV OC_FOLDER="/open-context-py"
 
-USER root
-
-RUN echo "Open Context should install in $OC_FOLDER";
+RUN echo "Open Context should install in ${OC_FOLDER}";
 
 # Do the apt installation also install git
 RUN apt-get update
@@ -86,22 +83,22 @@ RUN echo "Open Context repo contents:";
 RUN ls
 RUN echo "git checkout ${GIT_BRANCH}";
 RUN git checkout ${GIT_BRANCH};
-RUN pip install -r /open-context-py/requirements.txt
+RUN pip install -r ${OC_FOLDER}/requirements.txt
 
-COPY /secrets/secrets.json /open-context-py/secrets.json
+COPY /secrets/secrets.json ${OC_FOLDER}/secrets.json
 
 # COPY static/ open-context-py/static
-RUN mkdir -p /open-context-py/file_cache
-RUN mkdir -p /open-context-py/logs
-RUN echo "Start of error logs...\n" > /open-context-py/logs/error.log
+RUN mkdir -p ${OC_FOLDER}/file_cache
+RUN mkdir -p ${OC_FOLDER}/logs
+RUN echo "Start of error logs...\n" > ${OC_FOLDER}/logs/error.log
 
-COPY /oc/entrypoint.sh /open-context-py/entrypoint.sh
-RUN chmod -R 700 /open-context-py/entrypoint.sh
+COPY /oc/entrypoint.sh ${OC_FOLDER}/entrypoint.sh
+RUN chmod -R 700 ${OC_FOLDER}/entrypoint.sh
 
-WORKDIR /open-context-py
+WORKDIR ${OC_FOLDER}
 ENTRYPOINT ["./entrypoint.sh"]
 CMD ["run_oc"]
-WORKDIR /open-context-py
+WORKDIR ${OC_FOLDER}
 
 # Expose ports.
 # Open Context Django
