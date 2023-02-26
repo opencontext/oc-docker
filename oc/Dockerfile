@@ -51,11 +51,14 @@ RUN git checkout ${GIT_BRANCH};
 RUN pip install -r ${OC_FOLDER}/requirements.txt
 
 RUN apt-get install -y nano
+
 # The oc-secrets is the './secrets' directory from outside
 # the container. Hopefully this will make the secrets.json
-# editable.
-VOLUME ["/oc-secrets"]
-COPY oc-secrets/secrets.json ${OC_FOLDER}/secrets.json
+# editable. But for some reason, we can only copy secrets.json
+# from the outside by using the host's directory.
+COPY secrets/secrets.json ${OC_FOLDER}/secrets.json
+
+
 
 # COPY static/ open-context-py/static
 RUN mkdir -p ${OC_FOLDER}/file_cache
