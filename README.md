@@ -89,10 +89,21 @@ For all domain names configure DNS A records to point to a server where Docker c
 
 ## Step 1 - Edit domain names and emails in the configuration
 
-Specify you domain names and contact emails for these domains in the `config.env`:
+Specify you domain names and contact emails for these domains in the `edit_dot_env` file and then save this file as `.env`:
+
+First make an `.env` file
+```bash
+cp edit_dot_env .env
+```
+
+Now edit `.env` file to change your settings.
+```bash
+nano .env
+```
+Here are properties to change based on your specific Web domain. Please note, for now this only supports one domain specified by the `DOMAINS` variable (the plural is asperational..).
 
 ```properties
-DOMAINS=staging.opencontext.org
+DOMAINS=prod.opencontext.org
 CERTBOT_EMAILS=eric@opencontext.org
 ```
 

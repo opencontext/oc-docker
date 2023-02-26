@@ -3,3 +3,5 @@
 secrets.json
 */secrets.json
 /static
+*.env
+.env
