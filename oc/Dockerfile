@@ -7,7 +7,7 @@ USER root
 ARG GIT_BRANCH
 ENV OC_FOLDER=/open-context-py
 
-mkdir -p ${OC_FOLDER}
+RUN mkdir -p ${OC_FOLDER}
 
 # Do the apt installation also install git
 RUN apt-get update
