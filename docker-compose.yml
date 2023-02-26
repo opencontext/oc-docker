@@ -22,12 +22,12 @@ services:
       - SSH_PRIVATE_KEY=${SSH_PRIVATE_KEY}
       - REDIS_HOST=redis
       - DEBUG="0"
-      - GIT_BRANCH="${GIT_BRANCH}""
+      - GIT_BRANCH=${GIT_BRANCH}
     build:
       context: .
       dockerfile: oc/Dockerfile
       args:
-        GIT_BRANCH: "${GIT_BRANCH}"
+        GIT_BRANCH: ${GIT_BRANCH}
     stdin_open: true # docker run -i
     tty: true        # docker run -t
     ports:
