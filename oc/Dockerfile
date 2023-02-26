@@ -7,6 +7,8 @@ USER root
 ARG GIT_BRANCH
 ENV OC_FOLDER=/open-context-py
 
+mkdir -p ${OC_FOLDER}
+
 # Do the apt installation also install git
 RUN apt-get update
 RUN apt-get install -y make software-properties-common
