@@ -6,8 +6,8 @@ RUN apk update && \
 RUN apk add --no-cache --upgrade bash
 
 RUN mkdir -p /workdir
-COPY worker.sh /workdir/worker.sh
-RUN chmod -R 700 /workdir/worker.sh
+COPY worker.sh /workdir/
+RUN chmod +x /workdir/worker.sh
 
 WORKDIR /workdir
-CMD ["sh", "./worker.sh"]
+CMD ["sh", "worker.sh"]
