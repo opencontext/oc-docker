@@ -56,8 +56,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./:/workdir:ro
     restart: unless-stopped
-    command:
-      - run_oc_worker
     depends_on:
       - oc
 
