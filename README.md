@@ -140,8 +140,8 @@ CERTBOT_TEST_CERT=0
 Re-create the volume for Let's Encrypt certificates:
 
 ```bash
-docker volume rm opencontext_certbot_certs
-docker volume create --name=opencontext_certbot_certs
+docker volume rm certbot_certs
+docker volume create --name=certbot_certs
 ```
 
 Start the containers:
