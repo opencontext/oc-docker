@@ -54,6 +54,7 @@ RUN apt-get install -y nano
 # The oc-secrets is the './secrets' directory from outside
 # the container. Hopefully this will make the secrets.json
 # editable.
+VOLUME ["/oc-secrets"]
 COPY /oc-secrets/secrets.json ${OC_FOLDER}/secrets.json
 
 # COPY static/ open-context-py/static
