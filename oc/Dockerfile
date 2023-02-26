@@ -49,9 +49,12 @@ ENV PATH="/opt/venv/bin:$PATH"
 RUN pip install --upgrade pip
 
 # Clone the Open Context git repo, checkout the desired branch
-RUN git clone https://github.com/ekansa/open-context-py.git
+RUN git clone https://github.com/ekansa/open-context-py.git ${OC_FOLDER}
 
 WORKDIR ${OC_FOLDER}
+RUN git pull
+RUN git pull
+RUN git pull
 RUN echo "Open Context repo contents:";
 RUN echo "git checkout ${GIT_BRANCH}";
 RUN git checkout ${GIT_BRANCH};
