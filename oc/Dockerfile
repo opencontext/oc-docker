@@ -11,7 +11,7 @@ ENV OC_FOLDER="/open-context-py"
 
 USER root
 
-RUN echo "Open Context should install in ${OC_FOLDER}";
+RUN echo "Open Context should install in $OC_FOLDER";
 
 # Do the apt installation also install git
 RUN apt-get update
@@ -81,10 +81,12 @@ RUN pip install --upgrade pip
 # Clone the Open Context git repo, checkout the desired branch
 RUN git clone https://github.com/ekansa/open-context-py.git
 
-WORKDIR /open-context-py
+WORKDIR ${OC_FOLDER}
+RUN echo "Open Context repo contents:";
+RUN ls
 RUN echo "git checkout ${GIT_BRANCH}";
 RUN git checkout ${GIT_BRANCH};
-RUN pip install -r $/open-context-py/requirements.txt
+RUN pip install -r /open-context-py/requirements.txt
 
 COPY /secrets/secrets.json /open-context-py/secrets.json
 
