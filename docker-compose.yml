@@ -41,7 +41,7 @@ services:
       -  $PWD:/deploy_files
       - ./logs/open-context-py:/open-context-py/logs
       - ./static:/open-context-py/static
-      - ./secrets:/oc-secrets
+      - ./secrets/:/oc-secrets
     command:
       - run_oc
     depends_on:
