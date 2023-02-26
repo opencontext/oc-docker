@@ -18,8 +18,7 @@ RUN apt-get update --fix-missing && apt-get install -y git
 
 # Install the postgres client
 RUN apt-get update
-RUN apt-get install -y postgresql-client \
-    && apt-get install -y nano
+RUN apt-get install -y postgresql-client
 
 FROM python:3.10
 # set environment variables
@@ -51,6 +50,7 @@ RUN echo "git checkout ${GIT_BRANCH}";
 RUN git checkout ${GIT_BRANCH};
 RUN pip install -r ${OC_FOLDER}/requirements.txt
 
+RUN apt-get install -y nano
 COPY /secrets/secrets.json ${OC_FOLDER}/secrets.json
 
 # COPY static/ open-context-py/static
