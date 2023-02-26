@@ -46,6 +46,21 @@ services:
     depends_on:
       - redis
 
+  oc_worker:
+    container_name: oc_worker
+    build: ./oc_worker
+    image: opencontext/oc_worker
+    environment:
+      COMPOSE_PROJECT_NAME: "${COMPOSE_PROJECT_NAME}"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./:/workdir:ro
+    restart: unless-stopped
+    command:
+      - run_oc_worker
+    depends_on:
+      - oc
+
   nginx:
     container_name: nginx
     build: ./nginx

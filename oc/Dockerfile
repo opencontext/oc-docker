@@ -60,6 +60,8 @@ RUN echo "Start of error logs...\n" > ${OC_FOLDER}/logs/error.log
 COPY /oc/entrypoint.sh ${OC_FOLDER}/entrypoint.sh
 RUN chmod -R 700 ${OC_FOLDER}/entrypoint.sh
 
+
+
 WORKDIR ${OC_FOLDER}
 ENTRYPOINT ["./entrypoint.sh"]
 CMD ["run_oc"]

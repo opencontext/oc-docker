@@ -13,8 +13,8 @@ git_fetch_reset() {
 run_worker() {
     cd ${OC_FOLDER}
     echo "Open Context worker via:"
-    echo "python manage.py rqworker high &"
-    python manage.py rqworker high &
+    echo "python manage.py rqworker high"
+    exec sh -c "python manage.py rqworker high"
 }
 
 run_django() {
@@ -27,7 +27,6 @@ run_django() {
 
 run_oc() {
     git_fetch_reset
-    run_worker
     run_django
 }
 
