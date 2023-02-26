@@ -49,7 +49,7 @@ services:
     build: ./nginx
     image: opencontext/nginx
     env_file:
-      - ./config.env
+      - ./.env
     environment:
       - DOMAINS="${DOMAINS}"
       - DEPLOY_HOST="${DEPLOY_HOST}"
@@ -73,7 +73,7 @@ services:
     build: ./certbot
     image: opencontext/certbot
     env_file:
-      - ./config.env
+      - ./.env
     volumes:
       - certbot_certs:/etc/letsencrypt
       - oc_certbot:$CERT_PATH
