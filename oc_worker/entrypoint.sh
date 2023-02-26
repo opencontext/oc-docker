@@ -4,7 +4,7 @@ run_oc_worker() {
     cd /workdir
     echo "Start Open Context Worker via Docker"
     echo "docker compose run --rm --no-TTY --entrypoint oc run_worker"
-    docker compose run --rm --no-TTY --entrypoint oc run_worker
+    docker compose run oc run_worker
 }
 
 
