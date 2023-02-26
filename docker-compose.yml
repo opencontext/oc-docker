@@ -16,16 +16,18 @@ services:
     container_name: oc
     image: opencontext/oc
     restart: always
-    build:
-      context: .
-      dockerfile: oc/Dockerfile
-      args:
-        GIT_BRANCH: "new-schema-1"
+    env_file:
+      - ./.env
     environment:
       - SSH_PRIVATE_KEY=${SSH_PRIVATE_KEY}
       - REDIS_HOST=redis
       - DEBUG="0"
       - GIT_BRANCH="new-schema-1"
+    build:
+      context: .
+      dockerfile: oc/Dockerfile
+      args:
+        GIT_BRANCH: "new-schema-1"
     stdin_open: true # docker run -i
     tty: true        # docker run -t
     ports:
