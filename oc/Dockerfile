@@ -1,14 +1,14 @@
+FROM ubuntu:20.04
+# Start with Ubuntu 20
+
 # Build a working Open Context deployment from a dockerfile
 # Example invocation:
 #
 # DOCKER_BUILDKIT=1 docker build --ssh github=~/.ssh/oc_docker_id_rsa -t buildtest .
-
 ARG GIT_BRANCH
 ENV GIT_BRANCH=${GIT_BRANCH}
 ENV OC_FOLDER=/open-context-py
 
-# Start with Ubuntu 20
-FROM ubuntu:20.04
 USER root
 
 # Do the apt installation also install git
