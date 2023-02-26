@@ -4,32 +4,21 @@ FROM ubuntu:20.04
 # Build a working Open Context deployment from a dockerfile
 USER root
 
-ARG GIT_BRANCH
-ENV OC_FOLDER=/open-context-py
-
-RUN mkdir -p ${OC_FOLDER}
-
 # Do the apt installation also install git
-RUN apt-get update
-RUN apt-get install -y make software-properties-common
-RUN apt-get install -y --no-install-recommends curl
-RUN apt-get install -y --no-install-recommends gcc
-RUN apt-get install -y --no-install-recommends build-essential
-RUN apt-get install -y --no-install-recommends mime-support
-RUN apt-get install -y --no-install-recommends libgdal-dev
-RUN apt-get install -y --no-install-recommends nano
+RUN apt-get update && && apt-get install -y --no-install-recommends \
+    make software-properties-common \
+    curl \
+    gcc \
+    build-essential \
+    mime-support \
+    libgdal-dev \
+    nano
 RUN apt-get update --fix-missing && apt-get install -y git
 
 
 # Install the postgres client
 RUN apt-get update
 RUN apt-get install -y postgresql-client
-
-# Install the redis cache
-# RUN apt-get update
-# RUN apt-get install -y redis-server
-# RUN redis-server &
-
 
 FROM python:3.10
 # set environment variables
@@ -40,11 +29,12 @@ RUN python -m venv /opt/venv
 # Make sure we use the virtualenv:
 ENV PATH="/opt/venv/bin:$PATH"
 
-# Now install pip
-# RUN apt-get install -y python3-pip
-# RUN groupadd -r oc
-# RUN useradd -m -r -g oc -G sudo oc
-# USER oc
+# Make environment variable available when the venv is active.
+ARG GIT_BRANCH
+ENV OC_FOLDER="/open-context-py"
+
+RUN mkdir -p ${OC_FOLDER}
+
 # ENV PATH="/opt/venv/bin:$PATH"
 RUN pip install --upgrade pip
 
