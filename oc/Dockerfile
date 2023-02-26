@@ -79,24 +79,25 @@ RUN pip install --upgrade pip
 # Clone the Open Context git repo, checkout the desired branch
 RUN git clone https://github.com/ekansa/open-context-py.git
 
-WORKDIR ${OC_FOLDER}
+WORKDIR /open-context-py
 RUN git checkout ${GIT_BRANCH};
 RUN git reset --hard origin/${GIT_BRANCH};
-RUN pip install -r ${OC_FOLDER}/requirements.txt
+RUN pip install -r $/open-context-py/requirements.txt
 
-COPY /secrets/secrets.json ${OC_FOLDER}/secrets.json
+COPY /secrets/secrets.json /open-context-py/secrets.json
 
 # COPY static/ open-context-py/static
-RUN mkdir -p ${OC_FOLDER}/file_cache
-RUN mkdir -p ${OC_FOLDER}/logs
-RUN echo "Start of error logs...\n" > ${OC_FOLDER}/logs/error.log
+RUN mkdir -p /open-context-py/file_cache
+RUN mkdir -p /open-context-py/logs
+RUN echo "Start of error logs...\n" > /open-context-py/logs/error.log
 
-COPY /oc/entrypoint.sh ${OC_FOLDER}/entrypoint.sh
-RUN chmod -R 700 ${OC_FOLDER}/entrypoint.sh
+COPY /oc/entrypoint.sh /open-context-py/entrypoint.sh
+RUN chmod -R 700 /open-context-py/entrypoint.sh
 
+WORKDIR /open-context-py
 ENTRYPOINT ["./entrypoint.sh"]
 CMD ["run_oc"]
-WORKDIR ${OC_FOLDER}
+WORKDIR /open-context-py
 
 # Expose ports.
 # Open Context Django
