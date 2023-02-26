@@ -4,7 +4,7 @@ RUN apk update && \
     apk add --no-cache docker-cli docker-cli-compose
 
 RUN mkdir -p /workdir
-COPY /oc_worker/entrypoint.sh /workdir/entrypoint.sh
+COPY entrypoint.sh /workdir/entrypoint.sh
 RUN chmod -R 700 /workdir/entrypoint.sh
 
 WORKDIR /workdir
