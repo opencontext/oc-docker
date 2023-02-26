@@ -8,6 +8,7 @@ RUN apk update && \
 RUN mkdir -p /workdir
 COPY entrypoint.sh /workdir/entrypoint.sh
 RUN chmod +x /workdir/entrypoint.sh
+RUN sed -i 's/\r$//g' /workdir/entrypoint.sh
 
 ENTRYPOINT ["/workdir/entrypoint.sh"]
 
