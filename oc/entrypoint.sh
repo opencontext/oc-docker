@@ -4,6 +4,11 @@
 GIT_BRANCH=${GIT_BRANCH}
 OC_FOLDER=/open-context-py
 
+update_secrets() {
+    echo "Updating Open Context secrets."
+    yes | cp -rf /oc-secrets/secrets.json ${OC_FOLDER}/secrets.json
+}
+
 git_fetch_reset() {
     cd ${OC_FOLDER}
     git fetch --all
@@ -11,6 +16,7 @@ git_fetch_reset() {
 }
 
 run_worker() {
+    update_secrets
     cd ${OC_FOLDER}
     echo "Open Context worker via:"
     echo "python manage.py rqworker high"
@@ -27,6 +33,7 @@ run_django() {
 
 run_oc() {
     git_fetch_reset
+    update_secrets
     run_django
 }
 
