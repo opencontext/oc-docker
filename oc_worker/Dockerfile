@@ -10,4 +10,4 @@ COPY worker.sh /workdir/worker.sh
 RUN chmod -R 700 /workdir/worker.sh
 
 WORKDIR /workdir
-CMD ["sh", "worker.sh"]
+CMD ["sh", "./worker.sh"]
