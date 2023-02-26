@@ -2,8 +2,9 @@ FROM alpine:3.16
 
 
 RUN apk update && \
-    apk add --no-cache docker-cli docker-cli-compose \
-    apk add --no-cache bash
+    apk add --no-cache docker-cli docker-cli-compose
+
+RUN apk add --no-cache bash
 
 RUN mkdir -p /workdir
 COPY entrypoint.sh /workdir/entrypoint.sh
