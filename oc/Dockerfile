@@ -50,7 +50,7 @@ RUN echo "git checkout ${GIT_BRANCH}";
 RUN git checkout ${GIT_BRANCH};
 RUN pip install -r ${OC_FOLDER}/requirements.txt
 
-RUN apt-get install -y nano
+RUN apt-get update && apt-get install -y nano
 
 # The oc-secrets is the './secrets' directory from outside
 # the container. Hopefully this will make the secrets.json
