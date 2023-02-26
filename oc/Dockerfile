@@ -5,10 +5,7 @@ FROM ubuntu:20.04
 USER root
 
 ARG GIT_BRANCH
-ENV GIT_BRANCH=${GIT_BRANCH}
-ENV OC_FOLDER="/open-context-py"
-
-RUN echo "Open Context should install in ${OC_FOLDER}";
+ARG OC_FOLDER="/open-context-py"
 
 # Do the apt installation also install git
 RUN apt-get update
@@ -20,31 +17,6 @@ RUN apt-get install -y --no-install-recommends mime-support
 RUN apt-get install -y --no-install-recommends libgdal-dev
 RUN apt-get install -y --no-install-recommends nano
 RUN apt-get update --fix-missing && apt-get install -y git
-
-
-# For some reason, I can't clone a repo from Github this way, leave it for now.
-# Set up SSH key directories, needed for interacting with GitHub
-# RUN mkdir -p 700 /root/.ssh
-# RUN chmod 700 /root/.ssh
-# ARG SSH_PRIVATE_KEY
-# RUN echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
-# Github requires a private key with strict permission settings
-# RUN chmod 400 /root/.ssh/id_rsa
-# RUN ls -la /root/.ssh/
-# RUN touch 600 /root/.ssh/known_hosts
-# RUN chmod 600 /root/.ssh/known_hosts
-# RUN ssh-keyscan github.com > /root/.ssh/known_hosts
-# RUN printf "Host github.com\nHostName github.com\nUser git\nIdentitiesOnly yes\nIdentityFile ~/.ssh/id_rsa\n" > /root/.ssh/config
-# RUN chmod 600 /root/.ssh/config
-# RUN cat /root/.ssh/config
-
-# Now install components required to run Open Context
-# We will probably need to use these eventually, so make sure this works
-# then possibly comment out.
-# RUN apt-get update
-# RUN apt-get install -y nodejs
-# RUN apt-get install -y npm
-# RUN npm install --global yarn
 
 
 # Install the postgres client
@@ -74,13 +46,11 @@ ENV PATH="/opt/venv/bin:$PATH"
 # ENV PATH="/opt/venv/bin:$PATH"
 RUN pip install --upgrade pip
 
- # WORKDIR /home/oc
 # Clone the Open Context git repo, checkout the desired branch
 RUN git clone https://github.com/ekansa/open-context-py.git
 
 WORKDIR ${OC_FOLDER}
 RUN echo "Open Context repo contents:";
-RUN ls
 RUN echo "git checkout ${GIT_BRANCH}";
 RUN git checkout ${GIT_BRANCH};
 RUN pip install -r ${OC_FOLDER}/requirements.txt
