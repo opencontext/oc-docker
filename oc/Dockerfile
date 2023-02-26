@@ -7,9 +7,11 @@ FROM ubuntu:20.04
 # DOCKER_BUILDKIT=1 docker build --ssh github=~/.ssh/oc_docker_id_rsa -t buildtest .
 ARG GIT_BRANCH
 ENV GIT_BRANCH=${GIT_BRANCH}
-ENV OC_FOLDER=/open-context-py
+ENV OC_FOLDER="/open-context-py"
 
 USER root
+
+RUN echo "Open Context should install in ${OC_FOLDER}";
 
 # Do the apt installation also install git
 RUN apt-get update
@@ -80,8 +82,8 @@ RUN pip install --upgrade pip
 RUN git clone https://github.com/ekansa/open-context-py.git
 
 WORKDIR /open-context-py
+RUN echo "git checkout ${GIT_BRANCH}";
 RUN git checkout ${GIT_BRANCH};
-RUN git reset --hard origin/${GIT_BRANCH};
 RUN pip install -r $/open-context-py/requirements.txt
 
 COPY /secrets/secrets.json /open-context-py/secrets.json
