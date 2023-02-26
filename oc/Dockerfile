@@ -18,7 +18,8 @@ RUN apt-get update --fix-missing && apt-get install -y git
 
 # Install the postgres client
 RUN apt-get update
-RUN apt-get install -y postgresql-client
+RUN apt-get install -y postgresql-client \
+    && apt-get install -y nano
 
 FROM python:3.10
 # set environment variables
