@@ -11,4 +11,4 @@ COPY worker.sh /workdir/worker.sh
 RUN chmod -R 700 /workdir/worker.sh
 RUN sed -i 's/\r$//g' /workdir/worker.sh
 
-CMD ["workdir", "worker.sh"]
+CMD ["/workdir/worker.sh"]
