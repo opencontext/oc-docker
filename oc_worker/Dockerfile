@@ -9,5 +9,4 @@ RUN mkdir -p /workdir
 COPY worker.sh /workdir/
 RUN chmod +x /workdir/worker.sh
 
-WORKDIR /workdir
-CMD ["sh", "worker.sh"]
+CMD ["sh", "/workdir/worker.sh"]
