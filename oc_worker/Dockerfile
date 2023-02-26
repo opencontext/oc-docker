@@ -7,11 +7,8 @@ RUN apk update && \
 RUN apk add --no-cache bash
 
 RUN mkdir -p /workdir
-COPY entrypoint.sh /workdir/entrypoint.sh
-RUN chmod -R 700 /workdir/entrypoint.sh
-RUN sed -i 's/\r$//g' /workdir/entrypoint.sh
+COPY worker.sh /workdir/worker.sh
+RUN chmod -R 700 /workdir/worker.sh
+RUN sed -i 's/\r$//g' /workdir/worker.sh
 
-ENTRYPOINT ["/workdir/entrypoint.sh"]
-
-WORKDIR /workdir
-CMD ["run_oc_worker"]
+CMD ["workdir", "worker.sh"]
