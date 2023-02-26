@@ -5,11 +5,7 @@ RUN apk update && \
 
 RUN mkdir -p /workdir
 COPY entrypoint.sh /workdir/entrypoint.sh
-RUN chmod -R 700 /workdir/entrypoint.sh
-
-WORKDIR /workdir
+RUN chmod +x /workdir/entrypoint.sh
 
 ENTRYPOINT ["/workdir/entrypoint.sh"]
 CMD ["run_oc_worker"]
-
-WORKDIR /workdir
