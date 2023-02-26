@@ -80,7 +80,7 @@ RUN pip install --upgrade pip
 RUN git clone https://github.com/ekansa/open-context-py.git
 
 WORKDIR ${OC_FOLDER}
-RUN cd ${OC_FOLDER}; git checkout ${GIT_BRANCH};
+RUN git checkout ${GIT_BRANCH};
 RUN git reset --hard origin/${GIT_BRANCH};
 RUN pip install -r ${OC_FOLDER}/requirements.txt
 
@@ -91,8 +91,8 @@ RUN mkdir -p ${OC_FOLDER}/file_cache
 RUN mkdir -p ${OC_FOLDER}/logs
 RUN echo "Start of error logs...\n" > ${OC_FOLDER}/logs/error.log
 
-COPY /oc/entrypoint.sh ${APP_ROOT}/entrypoint.sh
-RUN chmod -R 700 ${APP_ROOT}/entrypoint.sh
+COPY /oc/entrypoint.sh ${OC_FOLDER}/entrypoint.sh
+RUN chmod -R 700 ${OC_FOLDER}/entrypoint.sh
 
 ENTRYPOINT ["./entrypoint.sh"]
 CMD ["run_oc"]
