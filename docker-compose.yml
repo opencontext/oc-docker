@@ -59,6 +59,7 @@ services:
     restart: unless-stopped
     depends_on:
       - oc
+      - redis
 
   nginx:
     container_name: nginx
