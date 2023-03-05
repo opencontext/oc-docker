@@ -6,7 +6,7 @@ OC_FOLDER=/open-context-py
 
 update_secrets() {
     echo "Updating Open Context secrets."
-    yes | cp -rf /oc-secrets/secrets.json ${OC_FOLDER}/secrets.json
+    yes | cp -rf /secrets/secrets.json ${OC_FOLDER}/secrets.json
 }
 
 git_fetch_reset() {
