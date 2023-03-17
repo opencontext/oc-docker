@@ -7,6 +7,9 @@ if [ -z "$DOMAINS" ]; then
   exit 1;
 fi
 
+echo "Make sure Nginx has permissions to serve static files";
+chmod -R 755 /open-context-py/static;
+
 use_dummy_certificate() {
   # Switch sympolic links to reference the apprpriate SSL keys
   mkdir -p /etc/symb_link_ssl;
@@ -99,7 +102,7 @@ for domain in $domains_fixed; do
 
   echo "-----------------------------------------------";
   echo "Check out the contents of /open-context-py/static";
-  ls /open-context-py/static;
+  ls -l /open-context-py/static;
   echo "-----------------------------------------------";
 done
 
