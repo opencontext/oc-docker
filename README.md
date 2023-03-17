@@ -117,18 +117,28 @@ docker volume create --name=oc_certbot
 docker volume create --name=redisdata
 ```
 
-## Step 3 - Build images and start containers
+## Step 3 - Setup your static directory and secrets/secret.json
+This process assumes that you have a copy of the static javascript and css files that are NOT
+in version control with Open Context (yes, a pain.) Make sure the static directory and its contents
+have the appropriate permissions:
 
 ```bash
-docker-compose up --build
+sudo chmod -R 755 static/
 ```
 
-## Step 4 - Switch to production Let's Encrypt server after verifying HTTPS works with test certificates
+
+## Step 4 - Build images and start containers
+
+```bash
+docker compose up --build
+```
+
+## Step 5 - Switch to production Let's Encrypt server after verifying HTTPS works with test certificates
 
 Stop the containers:
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 Configure to use production Let's Encrypt server in `config.env`:
@@ -147,7 +157,7 @@ docker volume create --name=certbot_certs
 Start the containers:
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 
@@ -164,10 +174,10 @@ sudo chmod 666 /var/run/docker.sock
 One common need while the oc-docker compose is up and running would be to update the software in the Open Context container. To do so quickly, simply:
 
 ```
-# This updates to the latest head of the new-schema-1 branch:
+# This updates to the latest head of the staging branch:
 
-docker exec -it oc git -C /open-context-py reset --hard origin/new-schema-1
+docker exec -it oc git -C /open-context-py reset --hard origin/staging
 
 # Now restart the container:
-docker-compose restart oc
+docker compose restart oc
 ```
