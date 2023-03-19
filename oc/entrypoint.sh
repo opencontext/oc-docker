@@ -9,6 +9,11 @@ update_secrets() {
     yes | cp -rf /secrets/secrets.json ${OC_FOLDER}/secrets.json
 }
 
+update_static_permissions() {
+    echo "Make sure Nginx has permissions to serve static files";
+    chmod -R 755 /open-context-py/static;
+}
+
 git_fetch_reset() {
     cd ${OC_FOLDER}
     git fetch --all
@@ -33,6 +38,7 @@ run_django() {
 
 run_oc() {
     git_fetch_reset
+    update_static_permissions
     update_secrets
     run_django
 }
