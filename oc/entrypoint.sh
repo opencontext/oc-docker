@@ -38,7 +38,6 @@ run_django() {
 
 run_oc() {
     git_fetch_reset
-    update_static_permissions
     update_secrets
     run_django
 }
@@ -64,6 +63,9 @@ do
 	case ${key} in
         run_oc)
             run_oc
+        ;;
+        update_static_permissions)
+            update_static_permissions
         ;;
         run_worker)
             run_worker
