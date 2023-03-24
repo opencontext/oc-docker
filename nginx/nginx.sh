@@ -8,6 +8,7 @@ if [ -z "$DOMAINS" ]; then
 fi
 
 echo "Make sure Nginx has permissions to serve static files";
+chown -R www:www /open-context-py/static;
 chmod -R 755 /open-context-py/static;
 
 use_dummy_certificate() {
