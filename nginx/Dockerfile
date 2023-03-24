@@ -12,7 +12,7 @@ RUN apk add --no-cache openssl
 ARG STATIC_ROOT_ARG='/open-context-py/static'
 ENV STATIC_ROOT_DIR=$STATIC_ROOT_ARG
 RUN mkdir -p $STATIC_ROOT_DIR
-COPY ./static $STATIC_ROOT_DIR
+COPY ../static $STATIC_ROOT_DIR
 RUN chown -R www:www $STATIC_ROOT_DIR
 
 COPY nginx.conf /etc/nginx/nginx.conf
