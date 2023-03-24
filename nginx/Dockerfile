@@ -2,8 +2,9 @@ FROM nginx:1.18-alpine-perl
 
 
 RUN apk add doas; \
-    adduser www; \
-    echo 'permit www as root' > /etc/doas.d/doas.conf
+    adduser www -G wheel; \
+    echo 'www:123' | chpasswd; \
+    echo 'permit :wheel as root' > /etc/doas.d/doas.conf
 USER www
 
 RUN apk add --no-cache nginx-mod-http-perl
