@@ -73,7 +73,7 @@ services:
       - CERT_PATH="${CERT_PATH}"
     volumes:
       - ./logs/nginx:/logs/nginx
-      - ./static:/open-context-py/static
+      - ./static:/open-context-py/static:rw
       - nginx_ssl:/etc/nginx/ssl
       - certbot_certs:/etc/letsencrypt
       - oc_certbot:$CERT_PATH

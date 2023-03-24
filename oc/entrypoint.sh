@@ -9,6 +9,11 @@ update_secrets() {
     yes | cp -rf /secrets/secrets.json ${OC_FOLDER}/secrets.json
 }
 
+update_static_permissions() {
+    echo "Make sure Nginx has permissions to serve static files";
+    chmod -R 755 /open-context-py/static;
+}
+
 git_fetch_reset() {
     cd ${OC_FOLDER}
     git fetch --all
@@ -58,6 +63,9 @@ do
 	case ${key} in
         run_oc)
             run_oc
+        ;;
+        update_static_permissions)
+            update_static_permissions
         ;;
         run_worker)
             run_worker
