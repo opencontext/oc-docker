@@ -11,6 +11,8 @@ update_secrets() {
 
 update_static_permissions() {
     echo "Make sure Nginx has permissions to serve static files";
+    # nginx has this user.
+    chown -R 101:101 /open-context-py/static;
     chmod -R 755 /open-context-py/static;
 }
 
@@ -39,6 +41,7 @@ run_django() {
 run_oc() {
     git_fetch_reset
     update_secrets
+    update_static_permissions
     run_django
 }
 
