@@ -19,7 +19,8 @@ update_static_permissions() {
 git_fetch_reset() {
     cd ${OC_FOLDER}
     git fetch --all
-    git reset --hard origin/${GIT_BRANCH}
+    git checkout ${GIT_BRANCH}
+    git pull
 }
 
 run_worker() {
