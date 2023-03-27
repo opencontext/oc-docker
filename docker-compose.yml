@@ -83,8 +83,6 @@ services:
       - "80:80"
       - "443:443"
     restart: always
-    depends_on:
-      - oc
 
   certbot:
     build: ./certbot
