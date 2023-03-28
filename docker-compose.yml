@@ -63,7 +63,9 @@ services:
 
   nginx:
     container_name: nginx
-    build: ./nginx
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
     image: opencontext/nginx
     env_file:
       - ./.env

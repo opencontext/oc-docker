@@ -35,6 +35,10 @@ ENV OC_FOLDER="/open-context-py"
 
 RUN mkdir -p ${OC_FOLDER}
 
+# Copy the static contents for safe keeping
+RUN mkdir -p /backup_static
+COPY static /backup_static
+
 # ENV PATH="/opt/venv/bin:$PATH"
 RUN pip install --upgrade pip
 

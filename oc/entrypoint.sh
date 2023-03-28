@@ -10,6 +10,16 @@ update_secrets() {
 }
 
 update_static_permissions() {
+    # make sure we have a copy of all the static directories we need
+    yes | cp -npr /backup_static/3Dhop-4-3 /open-context-py/static
+    yes | cp -npr /backup_static/admin /open-context-py/static
+    yes | cp -npr /backup_static/bootstrap-slider /open-context-py/static
+    yes | cp -npr /backup_static/viewerjs /open-context-py/static
+    yes | cp -npr /backup_static/fontawesome /open-context-py/static
+    yes | cp -npr /backup_static/leaflet /open-context-py/static
+    yes | cp -npr /backup_static/openseadragon /open-context-py/static
+    yes | cp -npr /backup_static/bootstrap-vue /open-context-py/static
+    yes | cp -npr /backup_static/django_extensions /open-context-py/static
     echo "Make sure Nginx has permissions to serve static files";
     # nginx has this user.
     chown -R 101:101 /open-context-py/static;
