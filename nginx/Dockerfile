@@ -7,14 +7,14 @@ RUN apk add --no-cache openssl
 RUN mkdir -p /backup_static
 COPY static /backup_static
 
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY default.conf /etc/nginx/conf.d/default.conf
-COPY options-ssl-nginx.conf /etc/nginx/
-COPY hsts.conf /etc/nginx/
+COPY /nginx/nginx.conf /etc/nginx/nginx.conf
+COPY /nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY /nginx/options-ssl-nginx.conf /etc/nginx/
+COPY /nginx/hsts.conf /etc/nginx/
 RUN mkdir -p /customization
-COPY extra.conf /customization/extra.conf
+COPY /nginx/extra.conf /customization/extra.conf
 RUN mkdir -p /etc/symb_link_ssl
-COPY nginx.sh /customization/nginx.sh
+COPY /nginx/nginx.sh /customization/nginx.sh
 RUN chmod +x /customization/nginx.sh
 
 EXPOSE 80
