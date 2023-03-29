@@ -9,7 +9,7 @@ update_secrets() {
     yes | cp -rf /secrets/secrets.json ${OC_FOLDER}/secrets.json
 }
 
-update_static_permissions() {
+recopy_static_files() {
     # make sure we have a copy of all the static directories we need
     yes | cp -npr /backup_static/3Dhop-4-3 /open-context-py/static
     yes | cp -npr /backup_static/admin /open-context-py/static
@@ -20,6 +20,9 @@ update_static_permissions() {
     yes | cp -npr /backup_static/openseadragon /open-context-py/static
     yes | cp -npr /backup_static/bootstrap-vue /open-context-py/static
     yes | cp -npr /backup_static/django_extensions /open-context-py/static
+}
+
+update_static_permissions() {
     echo "Make sure Nginx has permissions to serve static files";
     # nginx has this user.
     chown -R 101:101 /open-context-py/static;
@@ -51,7 +54,6 @@ run_django() {
 
 run_oc() {
     git_fetch_reset
-    update_secrets
     update_static_permissions
     run_django
 }
