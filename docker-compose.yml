@@ -123,5 +123,5 @@ volumes:
   oc_certbot:
     external: true
   redisdata:
-    external: true2
+    external: true
   oc-static:
