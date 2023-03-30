@@ -25,7 +25,7 @@ recopy_static_files() {
 update_static_permissions() {
     echo "Make sure Nginx has permissions to serve static files";
     # nginx has this user.
-    chown -R 101:101 /open-context-py/static;
+    # chown -R 101:101 /open-context-py/static;
     chmod -R 755 /open-context-py/static;
 }
 

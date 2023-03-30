@@ -7,7 +7,7 @@ if [ -z "$DOMAINS" ]; then
   exit 1;
 fi
 
-update_static_permissions() {
+update_static_permissions_old() {
     # make sure we have a copy of all the static directories we need
     yes | cp -pr /backup_static/3Dhop-4-3 /open-context-py/static
     yes | cp -pr /backup_static/admin /open-context-py/static
@@ -21,6 +21,12 @@ update_static_permissions() {
     echo "Make sure Nginx has permissions to serve static files";
     # nginx has this user.
     chown -R 101:101 /open-context-py/static;
+    chmod -R 755 /open-context-py/static;
+}
+
+update_static_permissions() {
+    # make sure we have a copy of all the static directories we need
+    echo "Make sure Nginx has permissions to serve static files";
     chmod -R 755 /open-context-py/static;
 }
 
