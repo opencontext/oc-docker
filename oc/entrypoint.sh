@@ -26,7 +26,8 @@ update_static_permissions() {
     echo "Make sure Nginx has permissions to serve static files";
     # nginx has this user.
     # chown -R 101:101 /open-context-py/static;
-    chmod -R 755 /open-context-py/static;
+    yes | cp -npr /open-context-py/static/* /static_root;
+    chmod -R 755 /static_root;
 }
 
 git_fetch_reset() {
@@ -64,7 +65,7 @@ run_oc() {
 if [[ $#  -eq 0 ]]; then
 	run_oc
 fi
-
+2
 
 # Else, process arguments
 echo "Full command: $@"
