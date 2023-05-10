@@ -121,6 +121,11 @@ services:
       - oc_certbot:$CERT_PATH
     depends_on:
       - nginx
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1k"
+        max-file: "3"
     networks:
       - oc_net
 
@@ -137,6 +142,11 @@ services:
     depends_on:
       - nginx
       - certbot
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1k"
+        max-file: "3"
     networks:
       - oc_net
 
