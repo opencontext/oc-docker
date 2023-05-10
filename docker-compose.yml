@@ -45,6 +45,11 @@ services:
       - ./static:/open-context-py/static
       - ./secrets:/oc-secrets
       - oc-static:/static_root
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
     command:
       - run_oc
     depends_on:
