@@ -58,6 +58,11 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./:/workdir:ro
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1k"
+        max-file: "3"
     depends_on:
       - oc
       - redis
@@ -74,8 +79,13 @@ services:
       - DOMAINS="${DOMAINS}"
       - DEPLOY_HOST="${DEPLOY_HOST}"
       - CERT_PATH="${CERT_PATH}"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
     volumes:
-      - ./logs/nginx:/logs/nginx
+      - logs_nginx:/logs/nginx
       - ./static:/open-context-py/static:rw
       - oc-static:/static_root
       - nginx_ssl:/etc/nginx/ssl
