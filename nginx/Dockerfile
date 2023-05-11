@@ -13,6 +13,7 @@ COPY /nginx/options-ssl-nginx.conf /etc/nginx/
 COPY /nginx/hsts.conf /etc/nginx/
 RUN mkdir -p /customization
 COPY /nginx/extra.conf /customization/extra.conf
+COPY /nginx/blacklist.conf /customization/blacklist.conf
 RUN mkdir -p /etc/symb_link_ssl
 COPY /nginx/nginx.sh /customization/nginx.sh
 RUN chmod +x /customization/nginx.sh

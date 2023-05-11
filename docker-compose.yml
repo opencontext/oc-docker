@@ -11,6 +11,8 @@ services:
     volumes:
       - "redisdata:/data"
     command: "redis-server"
+    networks:
+      - oc_net
 
   oc:
     container_name: oc
@@ -43,10 +45,17 @@ services:
       - ./static:/open-context-py/static
       - ./secrets:/oc-secrets
       - oc-static:/static_root
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
     command:
       - run_oc
     depends_on:
       - redis
+    networks:
+      - oc_net
 
   oc_worker:
     container_name: oc_worker
@@ -58,9 +67,16 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./:/workdir:ro
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1k"
+        max-file: "3"
     depends_on:
       - oc
       - redis
+    networks:
+      - oc_net
 
   nginx:
     container_name: nginx
@@ -74,8 +90,13 @@ services:
       - DOMAINS="${DOMAINS}"
       - DEPLOY_HOST="${DEPLOY_HOST}"
       - CERT_PATH="${CERT_PATH}"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
     volumes:
-      - ./logs/nginx:/logs/nginx
+      - logs_nginx:/logs/nginx
       - ./static:/open-context-py/static:rw
       - oc-static:/static_root
       - nginx_ssl:/etc/nginx/ssl
@@ -87,6 +108,8 @@ services:
       - "80:80"
       - "443:443"
     restart: always
+    networks:
+      - oc_net
 
   certbot:
     build: ./certbot
@@ -98,6 +121,13 @@ services:
       - oc_certbot:$CERT_PATH
     depends_on:
       - nginx
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1k"
+        max-file: "3"
+    networks:
+      - oc_net
 
   cron:
     container_name: cron
@@ -112,6 +142,18 @@ services:
     depends_on:
       - nginx
       - certbot
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1k"
+        max-file: "3"
+    networks:
+      - oc_net
+
+networks:
+  oc_net:
+    driver: bridge
+    name: oc_net
 
 volumes:
   logs_nginx:
