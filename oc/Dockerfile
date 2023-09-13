@@ -1,11 +1,15 @@
-FROM ubuntu:20.04
-# Start with Ubuntu 20
+FROM ubuntu:22.04
+# Start with Ubuntu 22
 
 # Build a working Open Context deployment from a dockerfile
 USER root
 
 # Do the apt installation also install git
 RUN apt-get update && && apt-get install -y --no-install-recommends \
+    python3.11 \
+    python3.11-dev \
+    python3.11-venv \
+    python3-pip \
     make software-properties-common \
     curl \
     gcc \
@@ -20,7 +24,7 @@ RUN apt-get update --fix-missing && apt-get install -y git
 RUN apt-get update
 RUN apt-get install -y postgresql-client
 
-FROM python:3.10
+FROM python:3.11
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
