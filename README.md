@@ -24,7 +24,7 @@ For simplicity this example deals with the following domain names:
 * test1.devcomanda.com
 * test2.devcomanda.com
 
-The idea is simple. There are 3 containers: 
+The idea is simple. There are 3 containers:
 
 * Nginx
 * Certbot - for obtaining and renewing certificates
@@ -89,10 +89,21 @@ For all domain names configure DNS A records to point to a server where Docker c
 
 ## Step 1 - Edit domain names and emails in the configuration
 
-Specify you domain names and contact emails for these domains in the `config.env`:
+Specify you domain names and contact emails for these domains in the `edit_dot_env` file and then save this file as `.env`:
+
+First make an `.env` file
+```bash
+cp edit_dot_env .env
+```
+
+Now edit `.env` file to change your settings.
+```bash
+nano .env
+```
+Here are properties to change based on your specific Web domain. Please note, for now this only supports one domain specified by the `DOMAINS` variable (the plural is asperational..).
 
 ```properties
-DOMAINS=staging.opencontext.org
+DOMAINS=prod.opencontext.org
 CERTBOT_EMAILS=eric@opencontext.org
 ```
 
@@ -100,24 +111,34 @@ CERTBOT_EMAILS=eric@opencontext.org
 
 ```bash
 docker volume create --name=logs_nginx
-docker volume create --name=opencontext_nginx_ssl
-docker volume create --name=opencontext_certbot_certs
-docker volume create --name=staging_certbot
+docker volume create --name=nginx_ssl
+docker volume create --name=certbot_certs
+docker volume create --name=oc_certbot
 docker volume create --name=redisdata
 ```
 
-## Step 3 - Build images and start containers
+## Step 3 - Setup your static directory and secrets/secret.json
+This process assumes that you have a copy of the static javascript and css files that are NOT
+in version control with Open Context (yes, a pain.) Make sure the static directory and its contents
+have the appropriate permissions:
 
 ```bash
-docker-compose up --build
+sudo chmod -R 755 static/
 ```
 
-## Step 4 - Switch to production Let's Encrypt server after verifying HTTPS works with test certificates
+
+## Step 4 - Build images and start containers
+
+```bash
+docker compose up --build
+```
+
+## Step 5 - Switch to production Let's Encrypt server after verifying HTTPS works with test certificates
 
 Stop the containers:
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 Configure to use production Let's Encrypt server in `config.env`:
@@ -129,14 +150,14 @@ CERTBOT_TEST_CERT=0
 Re-create the volume for Let's Encrypt certificates:
 
 ```bash
-docker volume rm opencontext_certbot_certs
-docker volume create --name=opencontext_certbot_certs
+docker volume rm certbot_certs
+docker volume create --name=certbot_certs
 ```
 
 Start the containers:
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 
@@ -153,10 +174,10 @@ sudo chmod 666 /var/run/docker.sock
 One common need while the oc-docker compose is up and running would be to update the software in the Open Context container. To do so quickly, simply:
 
 ```
-# This updates to the latest head of the new-schema-1 branch:
+# This updates to the latest head of the staging branch:
 
-docker exec -it oc git -C /open-context-py reset --hard origin/new-schema-1
+docker exec -it oc git -C /open-context-py reset --hard origin/staging
 
 # Now restart the container:
-docker-compose restart oc
+docker compose restart oc
 ```

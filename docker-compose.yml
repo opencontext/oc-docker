@@ -1,4 +1,4 @@
-version: "3"
+version: "3.9"
 
 services:
 
@@ -11,18 +11,25 @@ services:
     volumes:
       - "redisdata:/data"
     command: "redis-server"
+    networks:
+      - oc_net
 
   oc:
     container_name: oc
     image: opencontext/oc
     restart: always
-    build:
-      context: .
-      dockerfile: oc/Dockerfile
+    env_file:
+      - ./.env
     environment:
       - SSH_PRIVATE_KEY=${SSH_PRIVATE_KEY}
       - REDIS_HOST=redis
       - DEBUG="0"
+      - GIT_BRANCH=${GIT_BRANCH}
+    build:
+      context: .
+      dockerfile: oc/Dockerfile
+      args:
+        GIT_BRANCH: ${GIT_BRANCH}
     stdin_open: true # docker run -i
     tty: true        # docker run -t
     ports:
@@ -36,45 +43,94 @@ services:
       -  $PWD:/deploy_files
       - ./logs/open-context-py:/open-context-py/logs
       - ./static:/open-context-py/static
-    command: bash -c "
-        git -C /open-context-py reset --hard origin/new-schema-1
-        && gunicorn -w 2 -b 0.0.0.0:8000 --chdir /open-context-py opencontext_py.wsgi:application --reload --timeout 3600"
+      - ./secrets:/oc-secrets
+      - oc-static:/static_root
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
+    command:
+      - run_oc
     depends_on:
       - redis
+    networks:
+      - oc_net
+
+  oc_worker:
+    container_name: oc_worker
+    build: ./oc_worker
+    image: opencontext/oc_worker
+    environment:
+      COMPOSE_PROJECT_NAME: "${COMPOSE_PROJECT_NAME}"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./:/workdir:ro
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1k"
+        max-file: "3"
+    depends_on:
+      - oc
+      - redis
+    networks:
+      - oc_net
 
   nginx:
     container_name: nginx
-    build: ./nginx
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
     image: opencontext/nginx
     env_file:
-      - ./config.env
+      - ./.env
+    environment:
+      - DOMAINS="${DOMAINS}"
+      - DEPLOY_HOST="${DEPLOY_HOST}"
+      - CERT_PATH="${CERT_PATH}"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
     volumes:
-      - ./logs/nginx:/logs/nginx
-      - ./static:/open-context-py/static
-      - opencontext_nginx_ssl:/etc/nginx/ssl
-      - opencontext_certbot_certs:/etc/letsencrypt
-      - staging_certbot:/var/www/certbot/staging.opencontext.org
-      - ./html:/var/www/html/staging.opencontext.org
+      - logs_nginx:/logs/nginx
+      - ./static:/open-context-py/static:rw
+      - oc-static:/static_root
+      - nginx_ssl:/etc/nginx/ssl
+      - certbot_certs:/etc/letsencrypt
+      - oc_certbot:$CERT_PATH
+      - ./html:$NGINX_HTML_PATH
     ports:
       - "8000:8000"
       - "80:80"
       - "443:443"
     restart: always
-    depends_on:
-      - oc
-    
+    networks:
+      - oc_net
+
   certbot:
     build: ./certbot
     image: opencontext/certbot
     env_file:
-      - ./config.env
+      - ./.env
     volumes:
-      - opencontext_certbot_certs:/etc/letsencrypt
-      - staging_certbot:/var/www/certbot/staging.opencontext.org
+      - certbot_certs:/etc/letsencrypt
+      - oc_certbot:$CERT_PATH
     depends_on:
       - nginx
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1k"
+        max-file: "3"
+    networks:
+      - oc_net
 
   cron:
+    container_name: cron
     build: ./cron
     image: opencontext/cron
     environment:
@@ -82,18 +138,32 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./:/workdir:ro
+    restart: unless-stopped
     depends_on:
       - nginx
       - certbot
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1k"
+        max-file: "3"
+    networks:
+      - oc_net
+
+networks:
+  oc_net:
+    driver: bridge
+    name: oc_net
 
 volumes:
   logs_nginx:
     external: true
-  opencontext_nginx_ssl:
+  nginx_ssl:
     external: true
-  opencontext_certbot_certs:
+  certbot_certs:
     external: true
-  staging_certbot:
+  oc_certbot:
     external: true
   redisdata:
     external: true
+  oc-static:
