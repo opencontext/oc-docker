@@ -64,7 +64,7 @@ services:
     environment:
       COMPOSE_PROJECT_NAME: "${COMPOSE_PROJECT_NAME}"
     restart: unless-stopped
-    command: python /open-context-py/manage.py rqworker high
+    command: python /open-context-py/manage.py rqworker high --url redis://redis:6379/0
     ports:
       - "6379:6379"
     links:
