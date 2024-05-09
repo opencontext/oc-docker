@@ -42,7 +42,7 @@ run_worker() {
     cd ${OC_FOLDER}
     echo "Open Context worker via:"
     echo "python manage.py rqworker high"
-    exec sh -c "python manage.py rqworker high"
+    exec sh -c "python manage.py rqworker high --url redis://redis:6379/0"
 }
 
 run_django() {
