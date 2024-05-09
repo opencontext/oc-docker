@@ -59,14 +59,12 @@ services:
 
   oc_worker:
     container_name: oc_worker
-    build: ./oc_worker
-    image: opencontext/oc_worker
+    build: .
+    image: opencontext/oc
     environment:
       COMPOSE_PROJECT_NAME: "${COMPOSE_PROJECT_NAME}"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./:/workdir:ro
     restart: unless-stopped
+    command: python manage.py rqworker high
     links:
       - redis:redis
     logging:
