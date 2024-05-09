@@ -59,14 +59,19 @@ services:
 
   oc_worker:
     container_name: oc_worker
-    build: ./oc_worker
-    image: opencontext/oc_worker
+    build:
+      context: .
+      dockerfile: oc/Dockerfile
+      args:
+        GIT_BRANCH: ${GIT_BRANCH}
+    image: opencontext/oc
     environment:
       COMPOSE_PROJECT_NAME: "${COMPOSE_PROJECT_NAME}"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./:/workdir:ro
     restart: unless-stopped
+    command:
+      - run_worker
+    links:
+      - redis:redis
     logging:
       driver: "json-file"
       options:
@@ -88,6 +93,7 @@ services:
       - ./.env
     environment:
       - DOMAINS="${DOMAINS}"
+      - DOMAINS_WWW="${DOMAINS_WWW}"
       - DEPLOY_HOST="${DEPLOY_HOST}"
       - CERT_PATH="${CERT_PATH}"
     logging:
