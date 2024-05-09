@@ -11,3 +11,6 @@ RUN chmod +x /action_dir/worker.sh
 
 WORKDIR /action_dir
 CMD ["./worker.sh"]
+
+# Redis
+EXPOSE 6379
