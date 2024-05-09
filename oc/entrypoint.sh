@@ -32,6 +32,7 @@ update_static_permissions() {
 
 git_fetch_reset() {
     cd ${OC_FOLDER}
+    echo "Update to latest of branch ${GIT_BRANCH}..."
     git fetch --all
     git checkout ${GIT_BRANCH}
     git pull
@@ -39,6 +40,7 @@ git_fetch_reset() {
 
 run_worker() {
     update_secrets
+    git_fetch_reset
     cd ${OC_FOLDER}
     echo "Pause for 10 secs to let Redis get ready..."
 	sleep 10s;
