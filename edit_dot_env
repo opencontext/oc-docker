@@ -1,7 +1,7 @@
 COMPOSE_PROJECT_NAME=production_opencontext
-DOMAINS=staging.opencontext.org
-DOMAINS_WWW=www.staging.opencontext.org
-DEPLOY_HOST=staging.opencontext.org
+DOMAINS=opencontext.org
+DOMAINS_WWW=www.opencontext.org
+DEPLOY_HOST=opencontext.org
 NGINX_HTML_PATH=/var/www/html/$DEPLOY_HOST
 CERT_PATH=/var/www/certbot/$DEPLOY_HOST
 CERTBOT_EMAILS=eric@opencontext.org
