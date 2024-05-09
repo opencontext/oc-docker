@@ -9,6 +9,11 @@ if [ -z "$DOMAINS" ]; then
   exit 1;
 fi
 
+if [ -z "$DOMAINS_WWW" ]; then
+  echo "DOMAINS_WWW environment variable is not set"
+  exit 1;
+fi
+
 until nc -z nginx 80; do
   echo "Waiting for nginx to start..."
   sleep 5s & wait ${!}
@@ -19,7 +24,8 @@ if [ "$CERTBOT_TEST_CERT" != "0" ]; then
 fi
 
 domains_fixed=$(echo "$DOMAINS" | tr -d \")
-domain_list=($domains_fixed)
+domains_www_fixed=$(echo "$DOMAINS_WWW" | tr -d \")
+domain_list=($domains_fixed $domains_www_fixed)
 emails_fixed=$(echo "$CERTBOT_EMAILS" | tr -d \")
 emails_list=($emails_fixed)
 for i in "${!domain_list[@]}"; do
