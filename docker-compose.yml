@@ -59,7 +59,11 @@ services:
 
   oc_worker:
     container_name: oc_worker
-    build: .
+    build:
+      context: .
+      dockerfile: oc/Dockerfile
+      args:
+        GIT_BRANCH: ${GIT_BRANCH}
     image: opencontext/oc
     environment:
       COMPOSE_PROJECT_NAME: "${COMPOSE_PROJECT_NAME}"
