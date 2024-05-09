@@ -39,7 +39,6 @@ git_fetch_reset() {
 }
 
 run_worker() {
-    update_secrets
     git_fetch_reset
     cd ${OC_FOLDER}
     echo "Pause for 10 secs to let Redis get ready..."
