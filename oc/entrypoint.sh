@@ -40,6 +40,8 @@ git_fetch_reset() {
 run_worker() {
     update_secrets
     cd ${OC_FOLDER}
+    echo "Pause for 10 secs to let Redis get ready..."
+	sleep 10s;
     echo "Open Context worker via:"
     echo "python manage.py rqworker high"
     exec sh -c "python manage.py rqworker high"
