@@ -25,7 +25,7 @@ fi
 
 domains_fixed=$(echo "$DOMAINS" | tr -d \")
 domains_www_fixed=$(echo "$DOMAINS_WWW" | tr -d \")
-domain_list=($domains_fixed $domains_www_fixed)
+domain_list=($domains_fixed)
 emails_fixed=$(echo "$CERTBOT_EMAILS" | tr -d \")
 emails_list=($emails_fixed)
 for i in "${!domain_list[@]}"; do
@@ -53,7 +53,7 @@ for i in "${!domain_list[@]}"; do
   certbot certonly \
     --webroot \
     -w "/var/www/certbot/$domain" \
-    -d "$domain" \
+    -d "$domain","www.$domain" \
     $test_cert_arg \
     $email_arg \
     --rsa-key-size "${CERTBOT_RSA_KEY_SIZE:-4096}" \
