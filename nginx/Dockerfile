@@ -2,7 +2,7 @@ FROM nginx:1.18-alpine-perl
 
 RUN apk add --no-cache nginx-mod-http-perl
 RUN apk add --no-cache openssl
-RUN apk add --no cache \
+RUN apk add --no-cache \
     libnginx-mod-http-geoip2 \
     libmaxminddb \
     curl \
