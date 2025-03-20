@@ -4,7 +4,6 @@ RUN apk add --no-cache nginx-mod-http-perl
 RUN apk add --no-cache openssl
 RUN apk add --no cache \
     libnginx-mod-http-geoip2 \
-    nginx-mod-http-geoip2 \
     libmaxminddb \
     curl \
     tar \
