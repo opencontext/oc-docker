@@ -1,4 +1,4 @@
-FROM nginx:alpine
+FROM nginx:stable-alpine-perl
 
 RUN apk add --no-cache openssl
 RUN apk add --no-cache \
@@ -9,6 +9,7 @@ RUN apk add --no-cache \
     file
 RUN apk add --no-cache nginx-mod-http-geoip2
 RUN apk add --no-cache nginx-mod-http-perl
+RUN rm -rf /var/cache/apk/*
 
 # Verify module versions
 RUN nginx -V 2>&1 | grep 'configure arguments' && ls -lah /etc/nginx/modules/
