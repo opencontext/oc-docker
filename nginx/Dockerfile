@@ -26,7 +26,7 @@ ARG GEO_IP_LICENSE_KEY
 
 RUN mkdir -p /customization/GeoIP
 # Download and extract the latest GeoLite2 Country database
-RUN curl -I -L -u ${GEO_IP_ACCOUNT_ID}:${GEO_IP_LICENSE_KEY} "https://download.maxmind.com/geoip/databases/GeoLite2-Country/download?suffix=tar.gz" \
+RUN curl -O -J -L -u ${GEO_IP_ACCOUNT_ID}:${GEO_IP_LICENSE_KEY} "https://download.maxmind.com/geoip/databases/GeoLite2-Country/download?suffix=tar.gz" \
     | tar -xz --strip-components=1 -C /customization/GeoIP
 
 
