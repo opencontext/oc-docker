@@ -29,11 +29,22 @@ ARG GEO_IP_ACCOUNT_ID
 ARG GEO_IP_LICENSE_KEY
 # Download and extract the latest GeoLite2 Country database
 # Download the file explicitly and verify it
-RUN curl -v --fail -o GeoLite2-Country.tar.gz -L -u "${GEO_IP_ACCOUNT_ID}:${GEO_IP_LICENSE_KEY}" \
-    "https://download.maxmind.com/geoip/databases/GeoLite2-Country/download?suffix=tar.gz" \
-    && file GeoLite2-Country.tar.gz \
-    && tar -xz --strip-components=1 -C /customization/GeoIP -f GeoLite2-Country.tar.gz \
-    && rm GeoLite2-Country.tar.gz
+# Download the GeoLite2 Country database
+RUN curl -v --fail --compressed -o GeoLite2-Country.tar.gz -L -u "${GEO_IP_ACCOUNT_ID}:${GEO_IP_LICENSE_KEY}" \
+    "https://download.maxmind.com/geoip/databases/GeoLite2-Country/download?suffix=tar.gz"
+
+# Verify file type and size
+RUN ls -lh GeoLite2-Country.tar.gz
+RUN file GeoLite2-Country.tar.gz
+
+# Check if the file is a valid gzip archive
+RUN tar -tzf GeoLite2-Country.tar.gz
+
+# Extract the file
+RUN tar -xz --strip-components=1 -C /customization/GeoIP -f GeoLite2-Country.tar.gz
+
+# Remove the archive to save space
+RUN rm GeoLite2-Country.tar.gz
 
 
 RUN mkdir -p /etc/symb_link_ssl
