@@ -21,10 +21,13 @@ RUN mkdir -p /customization
 COPY /nginx/extra.conf /customization/extra.conf
 COPY /nginx/blacklist.conf /customization/blacklist.conf
 
+ARG GEO_IP_ACCOUNT_ID
+ARG GEO_IP_LICENSE_KEY
+
 RUN mkdir -p /customization/GeoIP
 # Download and extract the latest GeoLite2 Country database
-# RUN curl -sSL "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&license_key=YOUR_LICENSE_KEY&suffix=tar.gz" \
-#    | tar -xz --strip-components=1 -C /customization/GeoIP
+RUN curl -I -L -u ${GEO_IP_ACCOUNT_ID}:${GEO_IP_LICENSE_KEY} "https://download.maxmind.com/geoip/databases/GeoLite2-Country/download?suffix=tar.gz" \
+    | tar -xz --strip-components=1 -C /customization/GeoIP
 
 
 RUN mkdir -p /etc/symb_link_ssl

@@ -88,6 +88,9 @@ services:
     build:
       context: .
       dockerfile: nginx/Dockerfile
+      args:
+        GEO_IP_ACCOUNT_ID: ${GEO_IP_ACCOUNT_ID}
+        GEO_IP_LICENSE_KEY: ${GEO_IP_LICENSE_KEY}
     image: opencontext/nginx
     env_file:
       - ./.env
@@ -96,6 +99,8 @@ services:
       - DOMAINS_WWW="${DOMAINS_WWW}"
       - DEPLOY_HOST="${DEPLOY_HOST}"
       - CERT_PATH="${CERT_PATH}"
+      - GEO_IP_ACCOUNT_ID="${GEO_IP_ACCOUNT_ID}"
+      - GEO_IP_LICENSE_KEY="${GEO_IP_LICENSE_KEY}"
     logging:
       driver: "json-file"
       options:
