@@ -91,6 +91,7 @@ services:
       args:
         GEO_IP_ACCOUNT_ID: ${GEO_IP_ACCOUNT_ID}
         GEO_IP_LICENSE_KEY: ${GEO_IP_LICENSE_KEY}
+        ENABLED_MODULES: perl geoip2
     image: opencontext/nginx
     env_file:
       - ./.env
