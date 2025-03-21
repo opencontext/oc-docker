@@ -1,6 +1,5 @@
-FROM nginx:1.27.4-alpine-perl
+FROM nginx:alpine
 
-RUN apk add --no-cache nginx-mod-http-geoip2
 RUN apk add --no-cache openssl
 RUN apk add --no-cache \
     libmaxminddb \
@@ -8,6 +7,12 @@ RUN apk add --no-cache \
     tar \
     gzip \
     file
+RUN apk add --no-cache nginx-mod-http-geoip2
+RUN apk add --no-cache nginx-mod-http-perl
+
+# Verify module versions
+RUN nginx -V 2>&1 | grep 'configure arguments' && ls -lah /etc/nginx/modules/
+
 
 # Copy the static contents for safe keeping
 RUN mkdir -p /backup_static
