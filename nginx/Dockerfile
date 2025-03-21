@@ -7,7 +7,8 @@ RUN apk add --no-cache \
     libmaxminddb \
     curl \
     tar \
-    gzip
+    gzip \
+    file
 
 # Copy the static contents for safe keeping
 RUN mkdir -p /backup_static
