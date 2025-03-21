@@ -1,6 +1,6 @@
 FROM nginx:1.27.4-alpine-perl
 
-# RUN apk add --no-cache nginx-mod-http-perl
+RUN apk add --no-cache nginx-mod-http-geoip2
 RUN apk add --no-cache openssl
 RUN apk add --no-cache \
     libmaxminddb \
