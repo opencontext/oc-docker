@@ -1,4 +1,4 @@
-FROM nginx:1.27.4-alpine-perl
+FROM nginx:1.26.3-alpine-perl
 
 RUN apk add --no-cache nginx-mod-http-geoip2
 RUN apk add --no-cache nginx-mod-http-perl
@@ -13,9 +13,6 @@ RUN apk add --no-cache \
 # Check and confirm module versions
 RUN nginx -V 2>&1 | grep 'configure arguments' && ls -lah /etc/nginx/modules/
 
-# Configure and build Nginx with the GeoIP2 module
-RUN ./configure --with-compat --add-dynamic-module=/ngx_http_geoip2_module \
-    && make modules
 
 # Copy the static contents for safe keeping
 RUN mkdir -p /backup_static
