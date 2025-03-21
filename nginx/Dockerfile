@@ -1,18 +1,48 @@
-FROM nginx:1.26.3-alpine-perl
+# See model: https://github.com/anroe/docker-nginx-geoip2/blob/master/alpine/Dockerfile
 
-RUN apk add --no-cache nginx-mod-http-geoip2
+ARG NGINX_VERSION=1.26.3
+
+FROM nginx:$NGINX_VERSION-alpine-perl
+
+ARG NGINX_VERSION=1.26.3
+ARG GEOIP2_VERSION=3.4
+
 RUN apk add --no-cache nginx-mod-http-perl
-RUN apk add --no-cache openssl
-RUN apk add --no-cache \
-    libmaxminddb \
+RUN apk --update --no-cache add \
+    gcc \
+    make \
+    libc-dev \
+    g++ \
+    openssl-dev \
+    linux-headers \
+    pcre-dev \
+    zlib-dev \
+    libtool \
+    automake \
+    autoconf \
+    libmaxminddb-dev \
     curl \
     tar \
     gzip \
-    file
+    file \
+    git
 
-# Check and confirm module versions
-RUN nginx -V 2>&1 | grep 'configure arguments' && ls -lah /etc/nginx/modules/
 
+RUN cd /opt \
+    && git clone --depth 1 -b $GEOIP2_VERSION --single-branch https://github.com/leev/ngx_http_geoip2_module.git \
+    && wget -O - http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz | tar zxfv - \
+    && mv /opt/nginx-$NGINX_VERSION /opt/nginx \
+    && cd /opt/nginx \
+    && ./configure --with-compat --add-dynamic-module=/opt/ngx_http_geoip2_module \
+    && make modules 
+
+
+FROM nginx:$NGINX_VERSION-alpine-perl
+
+COPY --from=0 /opt/nginx/objs/ngx_http_geoip2_module.so /usr/lib/nginx/modules
+
+RUN apk --update --no-cache add libmaxminddb
+RUN chmod -R 644 /usr/lib/nginx/modules/ngx_http_geoip2_module.so
 
 # Copy the static contents for safe keeping
 RUN mkdir -p /backup_static
