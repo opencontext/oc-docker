@@ -65,10 +65,22 @@ ARG GEO_IP_LICENSE_KEY
 # Download and extract the latest GeoLite2 Country database
 # Download the file explicitly and verify it
 # Download the GeoLite2 Country database
-RUN curl -v --fail --compressed -o GeoLite2-Country.tar.gz -L -u "${GEO_IP_ACCOUNT_ID}:${GEO_IP_LICENSE_KEY}" \
-    "https://download.maxmind.com/geoip/databases/GeoLite2-Country/download?suffix=tar.gz"
+ENV GEO_DB_TAR_PATH=/backup_static/GeoLite2-Country.tar.gz
+ENV GEO_DB_FILE_STATUS=""
+RUN if [-f "$GEO_DB_TAR_PATH" ]; then \
+        echo "GeoDatabase file already present."; \
+        export GEO_DB_FILE_STATUS="present"; \
+        cp $GEO_DB_TAR_PATH GeoLite2-Country.tar.gz; \
+    else \
+        echo "GeoDatabase file not found!"; \
+        curl -v --fail --compressed -o GeoLite2-Country.tar.gz -L -u "${GEO_IP_ACCOUNT_ID}:${GEO_IP_LICENSE_KEY}" \
+        "https://download.maxmind.com/geoip/databases/GeoLite2-Country/download?suffix=tar.gz"; \
+        export GEO_DB_FILE_STATUS="downloaded"; \
+        cp GeoLite2-Country.tar.gz $GEO_DB_TAR_PATH; \
+    fi
 
 # Verify file type and size
+RUN chmod 777 GeoLite2-Country.tar.gz
 RUN ls -lh GeoLite2-Country.tar.gz
 RUN file GeoLite2-Country.tar.gz
 
