@@ -45,6 +45,9 @@ RUN apk --update --no-cache add \
     libmaxminddb \
     file
 
+RUN apk add --no-cache nginx-mod-http-perl
+RUN apk add --no-cache openssl
+
 RUN chmod -R 644 /usr/lib/nginx/modules/ngx_http_geoip2_module.so
 
 # Copy the static contents for safe keeping
