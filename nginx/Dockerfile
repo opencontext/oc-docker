@@ -41,7 +41,10 @@ FROM nginx:$NGINX_VERSION-alpine-perl
 
 COPY --from=0 /opt/nginx/objs/ngx_http_geoip2_module.so /usr/lib/nginx/modules
 
-RUN apk --update --no-cache add libmaxminddb
+RUN apk --update --no-cache add \
+    libmaxminddb \
+    file
+
 RUN chmod -R 644 /usr/lib/nginx/modules/ngx_http_geoip2_module.so
 
 # Copy the static contents for safe keeping
