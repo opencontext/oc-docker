@@ -9,10 +9,14 @@ services:
     environment:
       - HOST=0.0.0.0
       - PORT=8080
+      - BIND:8080
+      - METRICS_BIND:9090
       - TARGET=http://oc:8000
       - DIFFICULTY=4
       - TIMEOUT=30
       - POLICY_FNAME=/data/cfg/botPolicy.yaml
+      - OG_PASSTHROUGH=true
+      - OG_EXPIRY_TIME=24h
     ports:
       - "8080:8080"
     volumes:

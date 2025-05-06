@@ -46,7 +46,7 @@ bots:
 
 # Eric added Open Context specific rules
 - name: oc-api-client
-  user_agent_regex: oc-api-client
+  user_agent: oc-api-client
   action: ALLOW
 
 # Generic catchall rule
