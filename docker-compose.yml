@@ -7,11 +7,11 @@ services:
     image: ghcr.io/techarohq/anubis:latest
     restart: always
     environment:
-      - ANUBIS_HOST=0.0.0.0
-      - ANUBIS_PORT=8080
-      - ANUBIS_TARGET=http://oc:8000
-      - ANUBIS_DIFFICULTY=4
-      - ANUBIS_TIMEOUT=30
+      - HOST=0.0.0.0
+      - PORT=8080
+      - TARGET=http://oc:8000
+      - DIFFICULTY=4
+      - TIMEOUT=30
       - POLICY_FNAME=/data/cfg/botPolicy.yaml
     ports:
       - "8080:8080"
