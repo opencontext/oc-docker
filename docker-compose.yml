@@ -2,6 +2,26 @@ version: "3.9"
 
 services:
 
+  anubis:
+    container_name: anubis
+    image: ghcr.io/techarohq/anubis:latest
+    restart: always
+    environment:
+      - ANUBIS_HOST=0.0.0.0
+      - ANUBIS_PORT=8080
+      - ANUBIS_TARGET=http://oc:8000
+      - ANUBIS_DIFFICULTY=4
+      - ANUBIS_TIMEOUT=30
+      - POLICY_FNAME=/data/cfg/botPolicy.yaml
+    ports:
+      - "8080:8080"
+    volumes:
+      - "./botPolicy.yaml:/data/cfg/botPolicy.yaml:ro"
+    networks:
+      - oc_net
+    depends_on:
+      - oc
+
   redis:
     container_name: redis
     image: "redis:6-alpine"
@@ -122,6 +142,8 @@ services:
     restart: always
     networks:
       - oc_net
+    depends_on:
+      - anubis
 
   certbot:
     build: ./certbot
