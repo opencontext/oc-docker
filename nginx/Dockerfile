@@ -56,8 +56,6 @@ COPY static /backup_static
 
 COPY /nginx/nginx.conf /etc/nginx/nginx.conf
 COPY /nginx/default.conf /etc/nginx/conf.d/default.conf
-# Add Anubis config.
-COPY /nginx/conf-anubis.inc /etc/nginx/conf.d/conf-anubis.inc
 COPY /nginx/options-ssl-nginx.conf /etc/nginx/
 COPY /nginx/hsts.conf /etc/nginx/
 RUN mkdir -p /customization
