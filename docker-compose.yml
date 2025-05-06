@@ -12,11 +12,8 @@ services:
       - ANUBIS_TARGET=http://oc:8000
       - ANUBIS_DIFFICULTY=4
       - ANUBIS_TIMEOUT=30
-      - POLICY_FNAME=/data/cfg/botPolicy.yaml
     ports:
       - "8080:8080"
-    volumes:
-      - "./botPolicy.yaml:/data/cfg/botPolicy.yaml:ro"
     networks:
       - oc_net
     depends_on:
