@@ -7,11 +7,10 @@ services:
     image: ghcr.io/techarohq/anubis:latest
     restart: always
     environment:
-      - BASE_PREFIX=/anubis
       - HOST=0.0.0.0
       - PORT=8080
-      - BIND:8080
-      - METRICS_BIND:9090
+      - BIND=8080
+      - METRICS_BIND=9090
       - TARGET=http://oc:8000
       - DIFFICULTY=4
       - TIMEOUT=30
