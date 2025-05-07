@@ -15,4 +15,5 @@ FROM ghcr.io/techarohq/anubis:latest
 
 # Copy the prepared files from the builder stage
 COPY --from=builder /web/static/img/ /web/static/img/
+COPY --from=builder /web/static/img/ /cmd/anubis/static/img/
 COPY --from=builder /data/cfg/ /data/cfg/
