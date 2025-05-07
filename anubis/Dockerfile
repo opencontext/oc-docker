@@ -1,17 +1,10 @@
 FROM ghcr.io/techarohq/anubis:latest
 
-# Create the directory for static images
-RUN mkdir -p /web/static/img
+# Create the directory for static images and copy files in one layer
+COPY happy.webp pensive.webp reject.webp botPolicy.yaml /tmp/
 
-# Copy your custom images
-COPY happy.webp /web/static/img/
-COPY pensive.webp /web/static/img/
-COPY reject.webp /web/static/img/
-
-# Copy custom bot policy
-RUN mkdir -p /data/cfg
-COPY botPolicy.yaml /data/cfg/
-
-# Set proper permissions
-RUN chmod 644 /web/static/img/*.webp
-RUN chmod 644 /data/cfg/botPolicy.yaml
+# Create directories and move files in one layer
+RUN mkdir -p /web/static/img /data/cfg && \
+    mv /tmp/*.webp /web/static/img/ && \
+    mv /tmp/botPolicy.yaml /data/cfg/ && \
+    chmod 644 /web/static/img/*.webp /data/cfg/botPolicy.yaml
