@@ -9,7 +9,8 @@ COPY ./anubis/pensive.webp /web/static/img/
 COPY ./anubis/reject.webp /web/static/img/
 
 # Copy custom bot policy
-COPY ./anubis/botPolicy.yaml /data/cfg/botPolicy.yaml
+RUN mkdir -p /data/cfg
+COPY ./anubis/botPolicy.yaml /data/cfg/
 
 # Set proper permissions
 RUN chmod 644 /web/static/img/*.webp
