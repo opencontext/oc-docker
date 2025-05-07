@@ -19,9 +19,6 @@ services:
       - "8080:8080"
     volumes:
       - ./anubis/botPolicy.yaml:/data/cfg/botPolicy.yaml:ro
-      - ./anubis/happy.webp:/web/static/img/happy.webp:ro
-      - ./anubis/pensive.webp:/web/static/img/pensive.webp:ro
-      - ./anubis/reject.webp:/web/static/img/reject.webp:ro
     networks:
       - oc_net
     depends_on:
