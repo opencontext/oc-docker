@@ -24,8 +24,6 @@ services:
       - ./anubis/reject.webp:/web/static/img/reject.webp:ro
     networks:
       - oc_net
-    depends_on:
-      - oc
 
   redis:
     container_name: redis
