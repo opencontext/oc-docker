@@ -18,7 +18,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./anubis/botPolicy.yaml:/data/cfg/botPolicy.yaml
+      - ./anubis/botPolicy.yaml:/data/cfg/botPolicy.yaml:ro
     networks:
       - oc_net
     depends_on:
