@@ -9,7 +9,7 @@ services:
     environment:
       - HOST=0.0.0.0
       - PORT=8080
-      - BIND=8080
+      - BIND=:8080
       - METRICS_BIND=9090
       - TARGET=http://oc:8000
       - DIFFICULTY=4
