@@ -7,6 +7,7 @@ services:
     image: ghcr.io/techarohq/anubis:latest
     restart: always
     environment:
+      - BASE_PREFIX=/anubis
       - HOST=0.0.0.0
       - PORT=8080
       - BIND:8080
@@ -15,8 +16,6 @@ services:
       - DIFFICULTY=4
       - TIMEOUT=30
       - POLICY_FNAME=/data/cfg/botPolicy.yaml
-      - OG_PASSTHROUGH=true
-      - OG_EXPIRY_TIME=24h
     ports:
       - "8080:8080"
     volumes:
