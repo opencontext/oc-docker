@@ -4,7 +4,7 @@ services:
 
   anubis:
     container_name: anubis
-    image: ghcr.io/techarohq/anubis:latest
+    image: anubis-oc
     restart: always
     environment:
       - HOST=0.0.0.0
@@ -19,9 +19,6 @@ services:
       - "8080:8080"
     volumes:
       - ./anubis/botPolicy.yaml:/data/cfg/botPolicy.yaml:ro
-      - ./anubis/happy.webp:/web/static/img/happy.webp
-      - ./anubis/pensive.webp:/web/static/img/pensive.webp
-      - ./anubis/reject.webp:/web/static/img/reject.webp
     networks:
       - oc_net
 
