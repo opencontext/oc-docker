@@ -49,6 +49,36 @@ bots:
   user_agent_regex: oc-api-client
   action: ALLOW
 
+# OC-API client second match
+- name: oc-api-client-2
+  expression: userAgent.contains("oc-api")
+  action: ALLOW
+
+# OAI-PMH client
+- name: oai-pmh-client
+  expression: userAgent.contains("oai")
+  action: ALLOW
+
+# Generic catchall Mozilla rule
+- name: generic-browser-mozilla
+  user_agent_regex: Mozilla
+  action: CHALLENGE
+
+# Generic catchall Opera rule
+- name: generic-browser-opera
+  user_agent_regex: Opera
+  action: CHALLENGE
+
+# Generic catchall curl rule
+- name: generic-browser-curl
+  user_agent_regex: curl
+  action: CHALLENGE
+
+# Generic catchall no user agent rule
+- name: no-user-agent-string
+  expression: userAgent == ""
+  action: DENY
+
 # Generic catchall rule
 - name: generic-browser
   user_agent_regex: >-
