@@ -2,7 +2,7 @@
 FROM alpine:latest as builder
 
 # Create the directory for static images and copy files
-COPY happy.webp pensive.webp reject.webp botPolicy.yaml /tmp/
+COPY oc-img/happy.webp oc-img/pensive.webp oc-img/reject.webp botPolicy.yaml /tmp/
 
 # Create directories and move files
 RUN mkdir -p /web/static/img /data/cfg && \
