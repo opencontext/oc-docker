@@ -4,9 +4,7 @@ services:
 
   anubis:
     container_name: anubis
-    build:
-      context: ./anubis
-      dockerfile: Dockerfile
+    image: ghcr.io/techarohq/anubis:latest
     restart: always
     environment:
       - HOST=0.0.0.0
