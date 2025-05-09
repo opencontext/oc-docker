@@ -18,7 +18,10 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./anubis/botPolicy.yaml:/data/cfg/botPolicy.yaml:ro
+      - type: bind
+        source: ${PWD}/anubis/botPolicy.yaml
+        target: /data/cfg/botPolicy.yaml
+        read_only: true
     networks:
       - oc_net
 
