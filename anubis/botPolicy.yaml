@@ -44,7 +44,20 @@ bots:
 #     report_as: 4    # lie to the operator
 #     algorithm: slow # intentionally waste CPU cycles and time
 
+
 # Eric added Open Context specific rules
+- name: deny-env
+  action: DENY
+  all:
+    - 'path == "/.env"'
+
+- name: allow-api-json-routes
+  action: ALLOW
+  expression:
+    all:
+    - '!(method == "HEAD" || method == "GET")'
+    - path.contains(".json")
+
 - name: oc-api-client
   user_agent_regex: oc-api-client
   action: ALLOW
@@ -67,6 +80,16 @@ bots:
 # Generic catchall Opera rule
 - name: generic-browser-opera
   user_agent_regex: Opera
+  action: CHALLENGE
+
+# Generic catchall Chrome rule
+- name: generic-browser-chrome
+  user_agent_regex: Chrome
+  action: CHALLENGE
+
+# Generic catchall Safari rule
+- name: generic-browser-safari
+  user_agent_regex: Safari
   action: CHALLENGE
 
 # Generic catchall curl rule
