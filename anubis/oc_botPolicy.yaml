@@ -48,7 +48,8 @@ bots:
 # Eric added Open Context specific rules
 - name: deny-env
   action: DENY
-  all:
+  expression:
+    all:
     - 'path == "/.env"'
 
 - name: oc-browser-samsung
