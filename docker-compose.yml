@@ -4,7 +4,9 @@ services:
 
   anubis:
     container_name: anubis
-    image: ghcr.io/techarohq/anubis:latest
+    build:
+      context: ./anubis
+      dockerfile: Dockerfile
     restart: always
     environment:
       - HOST=0.0.0.0
@@ -14,14 +16,9 @@ services:
       - TARGET=http://oc:8000
       - DIFFICULTY=4
       - TIMEOUT=30
-      - POLICY_FNAME=/data/cfg/botPolicy.yaml
+      - POLICY_FNAME=/data/cfg/oc_botPolicy.yaml
     ports:
       - "8080:8080"
-    volumes:
-      - type: bind
-        source: ${PWD}/anubis/botPolicy.yaml
-        target: /data/cfg/botPolicy.yaml
-        read_only: true
     networks:
       - oc_net
 
