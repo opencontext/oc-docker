@@ -51,6 +51,10 @@ bots:
   all:
     - 'path == "/.env"'
 
+- name: oc-browser-samsung
+  user_agent_regex: Samsung
+  action: ALLOW
+
 - name: allow-api-json-routes
   action: ALLOW
   expression:
