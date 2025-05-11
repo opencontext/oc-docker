@@ -135,7 +135,7 @@ services:
       - certbot_certs:/etc/letsencrypt
       - oc_certbot:$CERT_PATH
       - ./html:$NGINX_HTML_PATH
-      - oc-anubis-img:/anubis-images:ro
+      - ./nginx/oc-anubis-img:/anubis-images:ro
     ports:
       - "8000:8000"
       - "80:80"
