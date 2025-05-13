@@ -65,7 +65,8 @@ COPY /nginx/blacklist.conf /customization/blacklist.conf
 # Copy the anubis images
 RUN mkdir -p /oc-anubis-img
 COPY /nginx/oc-anubis-img /oc-anubis-img
-RUN chmod -R 664 /oc-anubis-img
+RUN chmod -R 755 /oc-anubis-img
+
 
 
 RUN mkdir -p /customization/GeoIP
