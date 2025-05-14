@@ -11,6 +11,11 @@
 ## /usr/share/docs/anubis/data or in the tarball you extracted Anubis from.
 
 bots:
+
+- name: oc-cc-bot
+  user_agent_regex: CCBot
+  action: ALLOW
+
 # Pathological bots to deny
 - # This correlates to data/bots/deny-pathological.yaml in the source tree
   # https://github.com/TecharoHQ/anubis/blob/main/data/bots/deny-pathological.yaml
