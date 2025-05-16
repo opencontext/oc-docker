@@ -66,9 +66,7 @@ COPY /nginx/blacklist.conf /customization/blacklist.conf
 RUN mkdir -p /oc-anubis-img
 COPY /nginx/oc-anubis-img /oc-anubis-img
 # Set ownership to nginx user and group
-RUN chown -R nginx:nginx /oc-anubis-img && \
-    # Set directory permissions to 755
-    find /oc-anubis-img -type d -exec chmod 755 {} \; && \
+RUN find /oc-anubis-img -type d -exec chmod 755 {} \; && \
     # Set file permissions to 644
     find /oc-anubis-img -type f -exec chmod 644 {} \; && \
     # Ensure the directory is sticky

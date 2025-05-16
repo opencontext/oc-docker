@@ -32,7 +32,6 @@ update_static_permissions() {
 
 check_anubis_permissions() {
     while true; do
-        chown -R nginx:nginx /oc-anubis-img
         find /oc-anubis-img -type d -exec chmod 755 {} \;
         find /oc-anubis-img -type f -exec chmod 644 {} \;
         sleep 3600  # Check every hour
