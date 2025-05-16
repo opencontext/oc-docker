@@ -67,7 +67,8 @@ RUN mkdir -p /oc-anubis-img
 # Copy files with 644 permissions (rw-r--r--)
 COPY --chmod=644 /nginx/oc-anubis-img/*.webp /oc-anubis-img/
 # Set directory permissions to 755 (drwxr-xr-x)
-RUN chmod 755 /oc-anubis-img
+RUN chmod -R 755 /oc-anubis-img
+RUN chmod 644 /oc-anubis-img/*.webp
 
 
 RUN mkdir -p /customization/GeoIP
