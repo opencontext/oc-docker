@@ -63,6 +63,7 @@ COPY /nginx/extra.conf /customization/extra.conf
 COPY /nginx/blacklist.conf /customization/blacklist.conf
 
 # Make sure Anubis images are readable by Nginx
+COPY /nginx/oc-anubis-img /oc-anubis-img
 RUN chmod -R 755 /oc-anubis-img
 
 
