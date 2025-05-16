@@ -135,7 +135,12 @@ services:
       - certbot_certs:/etc/letsencrypt
       - oc_certbot:$CERT_PATH
       - ./html:$NGINX_HTML_PATH
-      - ./nginx/oc-anubis-img:/oc-anubis-img:rw 
+      - type: bind
+        source: ./nginx/oc-anubis-img
+        target: /oc-anubis-img
+        read_only: true
+        bind:
+          propagation: shared
     ports:
       - "8000:8000"
       - "80:80"

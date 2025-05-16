@@ -30,6 +30,19 @@ update_static_permissions() {
     chmod -R 755 /open-context-py/static;
 }
 
+check_anubis_permissions() {
+    while true; do
+        chown -R nginx:nginx /oc-anubis-img
+        find /oc-anubis-img -type d -exec chmod 755 {} \;
+        find /oc-anubis-img -type f -exec chmod 644 {} \;
+        sleep 3600  # Check every hour
+    done
+}
+
+# Start the permission checker in the background
+check_anubis_permissions &
+
+
 use_dummy_certificate() {
   # Switch sympolic links to reference the apprpriate SSL keys
   mkdir -p /etc/symb_link_ssl;
