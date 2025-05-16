@@ -64,13 +64,10 @@ COPY /nginx/blacklist.conf /customization/blacklist.conf
 
 # Copy the anubis images
 RUN mkdir -p /oc-anubis-img
-COPY /nginx/oc-anubis-img /oc-anubis-img
-# Set ownership to nginx user and group
-RUN find /oc-anubis-img -type d -exec chmod 755 {} \; && \
-    # Set file permissions to 644
-    find /oc-anubis-img -type f -exec chmod 644 {} \; && \
-    # Ensure the directory is sticky
-    chmod +t /oc-anubis-img
+# Copy files with 644 permissions (rw-r--r--)
+COPY --chmod=644 /nginx/oc-anubis-img/*.webp /oc-anubis-img/
+# Set directory permissions to 755 (drwxr-xr-x)
+RUN chmod 755 /oc-anubis-img
 
 
 RUN mkdir -p /customization/GeoIP
