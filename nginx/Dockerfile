@@ -65,7 +65,7 @@ COPY /nginx/blacklist.conf /customization/blacklist.conf
 # Copy the anubis images
 RUN mkdir -p /serve-oc-anubis-img
 # Copy files with 644 permissions (rw-r--r--)
-RUN cp -r /oc-anubis-img/* /serve-oc-anubis-img/
+COPY /oc-anubis-img /serve-oc-anubis-img
 # Set directory permissions to 755 (drwxr-xr-x)
 RUN chmod -R 755 /serve-oc-anubis-img
 
