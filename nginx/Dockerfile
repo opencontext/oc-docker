@@ -63,12 +63,12 @@ COPY /nginx/extra.conf /customization/extra.conf
 COPY /nginx/blacklist.conf /customization/blacklist.conf
 
 # Copy the anubis images
-RUN mkdir -p /oc-anubis-img
+RUN mkdir -p /serve-oc-anubis-img
 # Copy files with 644 permissions (rw-r--r--)
-COPY --chmod=644 /nginx/oc-anubis-img/*.webp /oc-anubis-img/
+COPY --chmod=644 /nginx/oc-anubis-img/*.webp /serve-oc-anubis-img/
 # Set directory permissions to 755 (drwxr-xr-x)
-RUN chmod -R 755 /oc-anubis-img
-RUN chmod 644 /oc-anubis-img/*.webp
+RUN chmod -R 755 /serve-oc-anubis-img
+RUN chmod 644 /serve-oc-anubis-img/*.webp
 
 
 RUN mkdir -p /customization/GeoIP
