@@ -138,7 +138,7 @@ services:
       - type: bind
         source: ./nginx/oc-anubis-img
         target: /oc-anubis-img
-        read_only: true
+        read_only: false
         bind:
           propagation: shared
     ports:
