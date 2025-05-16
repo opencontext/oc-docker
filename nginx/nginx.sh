@@ -28,6 +28,8 @@ update_static_permissions() {
     # make sure we have a copy of all the static directories we need
     echo "Make sure Nginx has permissions to serve static files";
     chmod -R 755 /open-context-py/static;
+    # Make sure Anubis images are readable by Nginx
+    chmod -R 755 /serve-oc-anubis-img;
 }
 
 check_anubis_permissions() {
