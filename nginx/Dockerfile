@@ -64,6 +64,9 @@ COPY /nginx/blacklist.conf /customization/blacklist.conf
 
 # Make sure Anubis images are readable by Nginx
 COPY /nginx/oc-anubis-img /oc-anubis-img
+COPY /nginx/oc-anubis-img/happy.webp /oc-anubis-img/happy.webp 
+COPY /nginx/oc-anubis-img/pensive.webp /oc-anubis-img/pensive.webp
+COPY /nginx/oc-anubis-img/reject.webp /oc-anubis-img/reject.webp
 RUN chmod -R 755 /oc-anubis-img
 
 
