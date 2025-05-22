@@ -28,7 +28,20 @@ update_static_permissions() {
     # make sure we have a copy of all the static directories we need
     echo "Make sure Nginx has permissions to serve static files";
     chmod -R 755 /open-context-py/static;
+    # Make sure Anubis images are readable by Nginx
+    chmod -R 755 /oc-anubis-img;
 }
+
+check_anubis_permissions() {
+    while true; do
+        find /oc-anubis-img -type d -exec chmod -R 755 {} \;
+        sleep 3600  # Check every hour
+    done
+}
+
+# Start the permission checker in the background
+check_anubis_permissions &
+
 
 use_dummy_certificate() {
   # Switch sympolic links to reference the apprpriate SSL keys

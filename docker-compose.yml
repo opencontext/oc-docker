@@ -2,6 +2,26 @@ version: "3.9"
 
 services:
 
+  anubis:
+    container_name: anubis
+    build:
+      context: ./anubis
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8080
+      - BIND=:8080
+      - METRICS_BIND=:9090
+      - TARGET=http://oc:8000
+      - DIFFICULTY=4
+      - TIMEOUT=30
+      - POLICY_FNAME=/data/cfg/oc_botPolicy.yaml
+    ports:
+      - "8080:8080"
+    networks:
+      - oc_net
+
   redis:
     container_name: redis
     image: "redis:6-alpine"
@@ -115,6 +135,7 @@ services:
       - certbot_certs:/etc/letsencrypt
       - oc_certbot:$CERT_PATH
       - ./html:$NGINX_HTML_PATH
+      - ./nginx/oc-anubis-img:/stage-oc-anubis-img:rw 
     ports:
       - "8000:8000"
       - "80:80"
@@ -122,6 +143,8 @@ services:
     restart: always
     networks:
       - oc_net
+    depends_on:
+      - anubis
 
   certbot:
     build: ./certbot
