@@ -32,14 +32,17 @@ update_static_permissions() {
 
 git_fetch_reset() {
     cd ${OC_FOLDER}
+    echo "Update to latest of branch ${GIT_BRANCH}..."
     git fetch --all
     git checkout ${GIT_BRANCH}
     git pull
 }
 
 run_worker() {
-    update_secrets
+    git_fetch_reset
     cd ${OC_FOLDER}
+    echo "Pause for 10 secs to let Redis get ready..."
+	sleep 10s;
     echo "Open Context worker via:"
     echo "python manage.py rqworker high"
     exec sh -c "python manage.py rqworker high"
