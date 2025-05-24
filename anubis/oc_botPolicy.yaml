@@ -16,6 +16,10 @@ bots:
   user_agent_regex: ezid
   action: ALLOW
 
+- name: oc-ezid-uc
+  user_agent_regex: EZID
+  action: ALLOW
+
 - name: oc-cc-bot
   user_agent_regex: CCBot
   action: ALLOW
