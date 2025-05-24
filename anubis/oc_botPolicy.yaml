@@ -13,7 +13,7 @@
 bots:
 
 - name: oc-ezid
-  user_agent_rege: ezid
+  user_agent_regex: ezid
   action: ALLOW
 
 - name: oc-ezid-uc
