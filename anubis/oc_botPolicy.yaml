@@ -12,8 +12,21 @@
 
 bots:
 
+- name: oc-ezid
+  user_agent_rege: ezid
+  action: ALLOW
+
+- name: oc-ezid-uc
+  user_agent_regex: EZID
+  action: ALLOW
+
 - name: oc-cc-bot
   user_agent_regex: CCBot
+  action: ALLOW
+
+- name: "oc-ok-bots"
+  user_agent_regex: >-
+    CCBot|EZID
   action: ALLOW
 
 # Pathological bots to deny
