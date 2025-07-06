@@ -13,10 +13,8 @@
 bots:
 
 - name: well_known_ok
+  path_regex: ^/.well-known/.*$
   action: ALLOW
-  expression:
-    all:
-    - path.contains(".well-known")
 
 - name: oc-ezid
   user_agent_regex: ezid
