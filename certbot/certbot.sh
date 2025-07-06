@@ -29,7 +29,7 @@ domain_list=($domains_fixed)
 emails_fixed=$(echo "$CERTBOT_EMAILS" | tr -d \")
 emails_list=($emails_fixed)
 for i in "${!domain_list[@]}"; do
-  domain="${domain_list[i]}"
+  domain=${domain_list[i]}
 
   echo "Make cerbot directory for $domain";
   mkdir -p /var/www/certbot/$domain;
