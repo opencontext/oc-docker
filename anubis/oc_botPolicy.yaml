@@ -12,6 +12,12 @@
 
 bots:
 
+- name: well_known_ok
+  action: ALLOW
+  expression:
+    all:
+    - path.contains(".well-known")
+
 - name: oc-ezid
   user_agent_regex: ezid
   action: ALLOW
