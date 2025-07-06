@@ -15,7 +15,7 @@ services:
       - METRICS_BIND=:9090
       - TARGET=http://oc:8000
       - DIFFICULTY=4
-      - TIMEOUT=30
+      - TIMEOUT=45
       - POLICY_FNAME=/data/cfg/oc_botPolicy.yaml
     ports:
       - "8080:8080"
