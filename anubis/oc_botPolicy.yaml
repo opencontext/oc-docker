@@ -12,6 +12,58 @@
 
 bots:
 
+# Path-based ALLOW rules - must come before generic browser CHALLENGE rules
+- name: oc-home-allow
+  action: ALLOW
+  expression:
+    all:
+    - 'path == "/"'
+
+# Path-based ALLOW rules - must come before generic browser CHALLENGE rules
+- name: oc-map-projects-allow
+  action: ALLOW
+  expression:
+    any:
+    - 'path.contains("/map-projects")'
+    - 'path == "/map-projects.json"'
+
+# Path-based ALLOW rules - must come before generic browser CHALLENGE rules
+- name: oc-highlights-allow
+  action: ALLOW
+  expression:
+    any:
+    - 'path.contains("/highlights/")'
+    - 'path == "/highlights"'
+
+# Path-based ALLOW rules - must come before generic browser CHALLENGE rules
+- name: oc-highlights-api-allow
+  action: ALLOW
+  expression:
+    all:
+    - 'path.contains("/query")'
+    - '"proj-summary" in query'
+
+- name: oc-about-allow
+  action: ALLOW
+  expression:
+    any:
+    - 'path.contains("/about/")'
+    - 'path == "/about"'
+
+- name: oc-projects-index-allow
+  action: ALLOW
+  expression:
+    any:
+    - 'path.contains("/projects-index/")'
+    - 'path == "/projects-index"'
+    
+- name: oc-projects-allow
+  action: ALLOW
+  expression:
+    any:
+    - 'path.contains("/projects/")'
+    - 'path == "/projects"'
+
 - name: rsl
   path_regex: ^/rsl.xml
   action: ALLOW
@@ -107,58 +159,6 @@ bots:
 - name: oai-pmh-client
   expression: userAgent.contains("oai")
   action: ALLOW
-
-# Path-based ALLOW rules - must come before generic browser CHALLENGE rules
-- name: oc-home-allow
-  action: ALLOW
-  expression:
-    all:
-    - 'path == "/"'
-
-# Path-based ALLOW rules - must come before generic browser CHALLENGE rules
-- name: oc-map-projects-allow
-  action: ALLOW
-  expression:
-    any:
-    - 'path.contains("/map-projects")'
-    - 'path == "/map-projects.json"'
-
-# Path-based ALLOW rules - must come before generic browser CHALLENGE rules
-- name: oc-highlights-allow
-  action: ALLOW
-  expression:
-    any:
-    - 'path.contains("/highlights/")'
-    - 'path == "/highlights"'
-
-# Path-based ALLOW rules - must come before generic browser CHALLENGE rules
-- name: oc-highlights-api-allow
-  action: ALLOW
-  expression:
-    all:
-    - 'path.contains("/query")'
-    - '"proj-summary" in query'
-
-- name: oc-about-allow
-  action: ALLOW
-  expression:
-    any:
-    - 'path.contains("/about/")'
-    - 'path == "/about"'
-
-- name: oc-projects-index-allow
-  action: ALLOW
-  expression:
-    any:
-    - 'path.contains("/projects-index/")'
-    - 'path == "/projects-index"'
-
-- name: oc-projects-allow
-  action: ALLOW
-  expression:
-    any:
-    - 'path.contains("/projects/")'
-    - 'path == "/projects"'
 
 # Generic catchall Mozilla rule
 - name: generic-browser-mozilla
