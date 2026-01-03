@@ -16,6 +16,22 @@ bots:
   path_regex: ^/rsl.xml
   action: ALLOW
 
+- name: oc-about
+  path_regex: ^/about/.*$
+  action: ALLOW
+
+- name: oc-highlights
+  path_regex: ^/highlights/.*$
+  action: ALLOW
+
+- name: oc-projects-index
+  path_regex: ^/projects-index/.*$
+  action: ALLOW
+
+- name: oc-projects
+  path_regex: ^/projects/.*$
+  action: ALLOW
+
 - name: well_known_ok
   path_regex: ^/.well-known/.*$
   action: ALLOW
