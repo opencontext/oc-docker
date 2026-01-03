@@ -124,9 +124,9 @@ bots:
 - name: oc-highlights-api-allow
   action: ALLOW
   expression:
-    any:
-    - 'path.contains("/query/?rows=1&proj-summary=1")'
-    - 'path.contains("/query/?proj-summary=1&rows=1")'
+    all:
+    - 'path.contains("/query")'
+    - '"proj-summary" in query'
 
 - name: oc-about-allow
   action: ALLOW
