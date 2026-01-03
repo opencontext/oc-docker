@@ -21,19 +21,19 @@ bots:
   action: ALLOW
 
 - name: oc-about
-  path_regex: ^/about/.*$
+  path_regex: ^/about(/.*)?$
   action: ALLOW
 
 - name: oc-highlights
-  path_regex: ^/highlights/.*$
+  path_regex: ^/highlights(/.*)?$
   action: ALLOW
 
 - name: oc-projects-index
-  path_regex: ^/projects-index/.*$
+  path_regex: ^/projects-index(/.*)?$
   action: ALLOW
 
 - name: oc-projects
-  path_regex: ^/projects/.*$
+  path_regex: ^/projects(/.*)?$
   action: ALLOW
 
 - name: well_known_ok
