@@ -128,29 +128,34 @@ bots:
   expression: userAgent.contains("oai")
   action: ALLOW
 
-- name: oc-about-2
+# Path-based ALLOW rules - must come before generic browser CHALLENGE rules
+- name: oc-highlights-allow
   action: ALLOW
   expression:
-    all:
-    - path.contains("/about/")
+    any:
+    - 'path.startsWith("/highlights/")'
+    - 'path == "/highlights"'
 
-- name: oc-highlights-2
+- name: oc-about-allow
   action: ALLOW
   expression:
-    all:
-    - path.contains("/highlights/")
+    any:
+    - 'path.startsWith("/about/")'
+    - 'path == "/about"'
 
-- name: oc-projects-index-2
+- name: oc-projects-index-allow
   action: ALLOW
   expression:
-    all:
-    - path.contains("/projects-index/")
+    any:
+    - 'path.startsWith("/projects-index/")'
+    - 'path == "/projects-index"'
 
-- name: oc-projects-2
-    action: ALLOW
+- name: oc-projects-allow
+  action: ALLOW
   expression:
-    all:
-    - path.contains("/projects/")
+    any:
+    - 'path.startsWith("/projects/")'
+    - 'path == "/projects"'
 
 # Generic catchall Mozilla rule
 - name: generic-browser-mozilla
