@@ -120,6 +120,14 @@ bots:
     - 'path.contains("/highlights/")'
     - 'path == "/highlights"'
 
+# Path-based ALLOW rules - must come before generic browser CHALLENGE rules
+- name: oc-highlights-api-allow
+  action: ALLOW
+  expression:
+    any:
+    - 'path.contains("/query/?rows=1&proj-summary=1")'
+    - 'path.contains("/query/?proj-summary=1&rows=1")'
+
 - name: oc-about-allow
   action: ALLOW
   expression:
