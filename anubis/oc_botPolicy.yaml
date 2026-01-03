@@ -113,6 +113,14 @@ bots:
   action: ALLOW
 
 # Path-based ALLOW rules - must come before generic browser CHALLENGE rules
+- name: oc-map-projects-allow
+  action: ALLOW
+  expression:
+    any:
+    - 'path.contains("/map-projects")'
+    - 'path == "/map-projects.json"'
+
+# Path-based ALLOW rules - must come before generic browser CHALLENGE rules
 - name: oc-highlights-allow
   action: ALLOW
   expression:
