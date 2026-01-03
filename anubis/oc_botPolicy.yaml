@@ -12,6 +12,10 @@
 
 bots:
 
+- name: rsl
+  path_regex: ^/rsl.xml
+  action: ALLOW
+
 - name: well_known_ok
   path_regex: ^/.well-known/.*$
   action: ALLOW
