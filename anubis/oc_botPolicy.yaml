@@ -128,6 +128,30 @@ bots:
   expression: userAgent.contains("oai")
   action: ALLOW
 
+- name: oc-home-page-2
+  path_regex: ^/$
+  action: ALLOW
+
+- name: rsl-2
+  path_regex: ^/rsl.xml
+  action: ALLOW
+
+- name: oc-about-2
+  path_regex: ^/about(/.*)?$
+  action: ALLOW
+
+- name: oc-highlights-2
+  path_regex: ^/highlights(/.*)?$
+  action: ALLOW
+
+- name: oc-projects-index-2
+  path_regex: ^/projects-index(/.*)?$
+  action: ALLOW
+
+- name: oc-projects-2
+  path_regex: ^/projects(/.*)?$
+  action: ALLOW
+
 # Generic catchall Mozilla rule
 - name: generic-browser-mozilla
   user_agent_regex: Mozilla
