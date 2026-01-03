@@ -12,10 +12,6 @@
 
 bots:
 
-- name: oc-home-page
-  path_regex: ^/$
-  action: ALLOW
-
 - name: rsl
   path_regex: ^/rsl.xml
   action: ALLOW
@@ -111,6 +107,13 @@ bots:
 - name: oai-pmh-client
   expression: userAgent.contains("oai")
   action: ALLOW
+
+# Path-based ALLOW rules - must come before generic browser CHALLENGE rules
+- name: oc-home-allow
+  action: ALLOW
+  expression:
+    all:
+    - 'path == "/"'
 
 # Path-based ALLOW rules - must come before generic browser CHALLENGE rules
 - name: oc-map-projects-allow
