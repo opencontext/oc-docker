@@ -25,6 +25,7 @@ bots:
   expression:
     any:
     - 'path.contains("/map-projects")'
+    - 'path.contains("/map-projects.json")'
     - 'path == "/map-projects.json"'
 
 # Path-based ALLOW rules - must come before generic browser CHALLENGE rules
