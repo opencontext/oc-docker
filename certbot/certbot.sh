@@ -54,6 +54,7 @@ for i in "${!domain_list[@]}"; do
     --webroot \
     -w "/var/www/certbot/$domain" \
     -d $domain \
+    -d $domains_www_fixed \
     $test_cert_arg \
     $email_arg \
     --rsa-key-size "${CERTBOT_RSA_KEY_SIZE:-4096}" \
