@@ -37,6 +37,14 @@ bots:
     - 'path == "/highlights"'
 
 # Path-based ALLOW rules - must come before generic browser CHALLENGE rules
+- name: oc-utilities-allow
+  action: ALLOW
+  expression:
+    any:
+    - 'path.contains("/utilities/")'
+    - 'path == "/utilities"'
+
+# Path-based ALLOW rules - must come before generic browser CHALLENGE rules
 - name: oc-highlights-api-allow
   action: ALLOW
   expression:
