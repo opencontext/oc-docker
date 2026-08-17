@@ -98,6 +98,23 @@ bots:
     CCBot|EZID
   action: ALLOW
 
+## System load based checks.
+# If the system is under high load for the last 5 minutes, add weight.
+- name: high-load-average
+  action: WEIGH
+  expression: load_5m >= 6.0 # make sure to end the load comparison in a .0
+  weight:
+    adjust: 20
+
+# If it is not for the last 15 minutes, remove weight.
+- name: low-load-average
+  action: WEIGH
+  expression: load_15m <= 1.0 # make sure to end the load comparison in a .0
+  weight:
+    adjust: -10
+
+
+
 # Pathological bots to deny
 - # This correlates to data/bots/deny-pathological.yaml in the source tree
   # https://github.com/TecharoHQ/anubis/blob/main/data/bots/deny-pathological.yaml
