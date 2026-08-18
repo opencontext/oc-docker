@@ -1,5 +1,5 @@
 # First stage: Use a shell-equipped image to prepare files
-FROM alpine:latest as builder
+FROM alpine:latest AS builder
 
 # Create the directory and copy the policy file
 RUN mkdir -p /data/cfg
