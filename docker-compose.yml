@@ -63,7 +63,8 @@ services:
       -  $PWD:/deploy_files
       - ./logs/open-context-py:/open-context-py/logs
       - ./static:/open-context-py/static
-      - ./data:/open-context-py/data
+      - ./oc_file_cache:/open-context-py/file_cache
+      - ./oc_data:/oc_data
       - ./secrets:/oc-secrets
       - oc-static:/static_root
     logging:

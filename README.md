@@ -181,3 +181,59 @@ docker exec -it oc git -C /open-context-py reset --hard origin/staging
 # Now restart the container:
 docker compose restart oc
 ```
+
+
+## Externally Mounted Drive for Language Model and Filecache used by the OC container
+
+These instructions are for Google Cloud deployment. Adapt them as needed for other cloud providers.
+
+(1) Create a drive volume attached to the virtual machine instance `oc-language-model-disk-2026-09-08`
+(2) SSH into the virtual machine instance and prepare the drive volume for use:
+
+(3) Check that the new disk is attached to your virtual machine:
+```bash
+ls -l /dev/disk/by-id/google-*
+```
+
+You should see something like:
+```
+lrwxrwxrwx 1 root root  9 Sep  8 23:19 /dev/disk/by-id/google-oc-language-model-disk-2026-09-08 -> ../../sdb
+lrwxrwxrwx 1 root root  9 Jul 14 11:27 /dev/disk/by-id/google-oc-production-docker-v2 -> ../../sda
+lrwxrwxrwx 1 root root 10 Jul 14 11:27 /dev/disk/by-id/google-oc-production-docker-v2-part1 -> ../../sda1
+lrwxrwxrwx 1 root root 11 Jul 14 11:27 /dev/disk/by-id/google-oc-production-docker-v2-part14 -> ../../sda14
+lrwxrwxrwx 1 root root 11 Jul 14 11:27 /dev/disk/by-id/google-oc-production-docker-v2-part15 -> ../../sda15
+```
+
+(4) Format our `oc-language-model-disk-2026-09-08` disk, identified as `sdb`:
+
+```bash
+sudo mkfs.ext4 -m 0 -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdb
+```
+
+(5) Make a directory for the newly formatted drive, mount it, and make it read + write accessible:
+
+```bash
+sudo mkdir -p /mnt/disks/oc-language-model-disk-2026-09-08
+sudo mount -o discard,defaults /dev/sdb /mnt/disks/oc-language-model-disk-2026-09-08
+sudo chmod a+w /mnt/disks/oc-language-model-disk-2026-09-08
+```
+
+(5) Make some directories in the newly formatted and mounted drive. We'll need these for Open Context's use of language models:
+
+```bash
+sudo mkdir /mnt/disks/oc-language-model-disk-2026-09-08/oc_data
+sudo mkdir /mnt/disks/oc-language-model-disk-2026-09-08/oc_file_cache
+```
+
+(6) Give the new drive directory some proper ownership
+```bash
+sudo chown -R ekansa /mnt/disks/oc-language-model-disk-2026-09-08/oc_data
+sudo chown -R ekansa /mnt/disks/oc-language-model-disk-2026-09-08/oc_file_cache
+```
+
+(7) Add symlinks so the docker containers can access needed directories in the newly formatted and mounted drive:
+
+```bash
+sudo ln -s /mnt/disks/oc-language-model-disk-2026-09-08/oc_data ~/oc-docker/oc_data
+sudo ln -s /mnt/disks/oc-language-model-disk-2026-09-08/oc_file_cache ~/oc-docker/oc_file_cache
+```
