@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
 
   anubis:
@@ -203,6 +201,7 @@ volumes:
     external: true
   redisdata:
     external: true
+  oc-static:
   oc_file_cache:
     external: true
   oc_data:
