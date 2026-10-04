@@ -204,3 +204,8 @@ volumes:
   redisdata:
     external: true
   oc-static:
+    external: true
+  oc_file_cache:
+    external: true
+  oc_data:
+    external: true
