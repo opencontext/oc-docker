@@ -61,8 +61,8 @@ services:
       -  $PWD:/deploy_files
       - ./logs/open-context-py:/open-context-py/logs
       - ./static:/open-context-py/static
-      - ./oc_file_cache:/open-context-py/file_cache
-      - ./oc_data:/oc_data
+      - /mnt/disks/oc-language-model-disk-2026-09-08/oc_file_cache:/open-context-py/file_cache
+      - /mnt/disks/oc-language-model-disk-2026-09-08/oc_data:/oc_data
       - ./secrets:/oc-secrets
       - oc-static:/static_root
     logging:
@@ -202,7 +202,3 @@ volumes:
   redisdata:
     external: true
   oc-static:
-  oc_file_cache:
-    external: true
-  oc_data:
-    external: true
